@@ -75,7 +75,7 @@ namespace Fujtajbl
                     PrintColoredMessage($"{firstNum} {mathOperation} {secondNum} = {result} \n", ConsoleColor.Green);
 
                     // Don't need to check the result, just continue or exit
-                    GetAnswer("If you wanna continue type anything ('exit' to quit):", true);
+                    GetAnswer("If you wanna continue type anything:", true);
                 }
 
             }
