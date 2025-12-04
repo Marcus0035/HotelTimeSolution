@@ -1,6 +1,9 @@
-﻿using IPMasking;
+﻿using System.Net;
+using IPMasking;
 using IPMasking.Extensions;
-using System.Net;
+using Utilities.Extensions;
+
+const string exitMessage = "(or type 'exit' to quit)";
 
 try
 {
@@ -26,7 +29,7 @@ void RunApplication()
     Console.WriteLine("Welcome to IP Validator\n");
     Console.ResetColor();
 
-    var baseIPAddress = GetIpAddress("Please input base IP Address (or type 'exit' to quit):");
+    var baseIPAddress = GetIpAddress($"Please input base IP Address {exitMessage}:");
 
     PrintMaskOptions();
     var baseMask = GetMaskOption("Select mask by entering its number:");
@@ -37,9 +40,7 @@ void RunApplication()
 
     while (true)
     {
-        var newIp = GetIpAddress("Please input IP Address (or type 'exit' to quit):");
-
-        
+        var newIp = GetIpAddress($"Please input IP Address {exitMessage}:");
 
         var same = IsInSameSubnet(baseIPAddress, newIp, baseMask);
 
