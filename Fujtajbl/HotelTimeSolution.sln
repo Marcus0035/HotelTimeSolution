@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36616.10
+VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMasking", "HotelTimeSolution\IPMasking.csproj", "{92FDA570-BDD5-490F-B098-EA84A441912E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{474B0A72-A78C-4AAD-8C83-0471CD46347D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fujtajbl", "Fujtajbl\Fujtajbl.csproj", "{0A8FA90C-3006-4D6E-B095-700D580E53CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +15,6 @@ Global
 		{92FDA570-BDD5-490F-B098-EA84A441912E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92FDA570-BDD5-490F-B098-EA84A441912E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92FDA570-BDD5-490F-B098-EA84A441912E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
