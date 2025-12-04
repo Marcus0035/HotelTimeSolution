@@ -5,6 +5,7 @@ using Utilities.Extensions;
 
 const string exitMessage = "(or type 'exit' to quit)";
 
+// Application entry point with exception handling
 try
 {
     RunApplication();
@@ -18,6 +19,7 @@ catch (Exception ex)
     PrintColoredMessage($"\nUnexpected error: {ex.Message}", ConsoleColor.Red);
 }
 
+// Main application method
 void RunApplication()
 {
     PrintColoredMessage("Welcome to IP Validator\n", ConsoleColor.Cyan);
@@ -42,6 +44,7 @@ void RunApplication()
     }
 }
 
+// Helper methods
 IPAddress GetIpAddress(string prompt)
 {
     while (true)
@@ -58,19 +61,6 @@ IPAddress GetIpAddress(string prompt)
         PrintColoredMessage("Invalid IP address, try again.\n", ConsoleColor.Red);
     }
 }
-
-void PrintMaskOptions()
-{
-    PrintColoredMessage("\nAvailable Masks:", ConsoleColor.White);
-
-    foreach (Mask mask in Enum.GetValues(typeof(Mask)))
-    {
-        PrintColoredMessage($"{(byte)mask}: {mask.GetDisplayName()}", ConsoleColor.Yellow);
-    }
-
-    Console.WriteLine();
-}
-
 IPAddress GetMaskOption(string prompt)
 {
     while (true)
@@ -90,7 +80,6 @@ IPAddress GetMaskOption(string prompt)
         PrintColoredMessage("Unknown mask. Try again.\n", ConsoleColor.Red);
     }
 }
-
 bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
 {
     var ip1Bytes = ip1.GetAddressBytes();
@@ -109,6 +98,20 @@ bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
     return true;
 }
 
+// Display available mask options
+void PrintMaskOptions()
+{
+    PrintColoredMessage("\nAvailable Masks:", ConsoleColor.White);
+
+    foreach (Mask mask in Enum.GetValues(typeof(Mask)))
+    {
+        PrintColoredMessage($"{(byte)mask}: {mask.GetDisplayName()}", ConsoleColor.Yellow);
+    }
+
+    Console.WriteLine();
+}
+
+// Utility method
 void PrintColoredMessage(string message, ConsoleColor color)
 {
     Console.ForegroundColor = color;

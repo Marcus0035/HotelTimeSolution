@@ -32,6 +32,7 @@ namespace Fujtajbl
             void RunApplication()
             {
                 PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
+                PrintColoredMessage($"\nInfo:", ConsoleColor.White);
                 PrintColoredMessage($"For decimal numbers please use '{GetDecimalSeparator()}'", ConsoleColor.DarkCyan);
                 PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
