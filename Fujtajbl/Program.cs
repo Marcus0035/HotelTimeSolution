@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,55 +12,159 @@ namespace Fujtajbl
     {
         static void Main(string[] args)
         {
+            char[] validMathOperations = { '+', '-', '*', '/' };
+
+            // Application entry point with exception handling
             try
             {
                 RunApplication();
             }
             catch (OperationCanceledException)
             {
-                SetColor(ConsoleColor.Yellow);
-                Console.WriteLine("\nApplication terminated by user.");
-                Console.ResetColor();
+                PrintColoredMessage("\nApplication terminated by user.", ConsoleColor.Yellow);
             }
             catch (Exception ex)
             {
-                SetColor(ConsoleColor.Red);
-                Console.WriteLine($"\nUnexpected error: {ex.Message}");
-                Console.ResetColor();
+                PrintColoredMessage($"\nUnexpected error: {ex.Message}", ConsoleColor.Red);
             }
 
+            // Main application method
             void RunApplication()
             {
-                SetColor(ConsoleColor.Cyan);
-                Console.WriteLine("Welcome to Fujtajbl to VeryNice Calculator\n");
-                Console.ResetColor();
+                PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
+                PrintColoredMessage($"For decimal numbers please use '{GetDecimalSeparator()}'", ConsoleColor.DarkCyan);
+                PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
+                while (true)
+                {
+                    var firstNum = GetDouble("Please enter the first number:");
+                    var secondNum = GetDouble("Please enter the second number:");
 
+                    var mathOperation = GetMathOperation($"Please enter the math operation ({string.Concat(validMathOperations)}):");
+
+                    double result;
+
+                    try
+                    {
+                        DivideByZeroCheck(secondNum, mathOperation);
+                        result = GetResult(firstNum, secondNum, mathOperation);
+                        OverflowCheck(result, mathOperation);
+                    }
+                    catch (Exception e)
+                    {
+                        PrintColoredMessage(e.Message + "\n", ConsoleColor.Red);
+                        continue;
+                    }
+
+                    PrintColoredMessage($"{firstNum} {mathOperation} {secondNum} = {result} \n", ConsoleColor.Green);
+
+                    // Don't need to check the result, just continue or exit
+                    GetAnswer("If you wanna continue type anything ('exit' to quit):", true);
+                }
 
             }
 
-            void SetColor(ConsoleColor color)
+            // Validation methods
+            bool ConvertibleToDouble(string input)
             {
-                Console.ForegroundColor = color;
+                return double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
+            }
+            double GetResult(double firstNum, double secondNum, char operation)
+            {
+                switch (operation)
+                {
+                    case '+':
+                        return firstNum + secondNum;
+                    case '-':
+                        return firstNum - secondNum;
+                    case '*':
+                        return firstNum * secondNum;
+                    case '/': return firstNum / secondNum;
+
+                    default:
+                        throw new InvalidOperationException("Unknown operation.");
+                }
             }
 
-            string GetAnswer(string prompt)
+            // Exception handling methods
+            void DivideByZeroCheck(double number, char operation)
+            {
+                if (number == 0 && operation == '/')
+                    throw new DivideByZeroException("Division by zero is not allowed.");
+            }
+            void OverflowCheck(double result, char operation)
+            {
+                if (double.IsInfinity(result))
+                    throw new OverflowException($"Overflow occurred during '{operation}' operation.");
+            }
+
+            // Input methods
+            char GetMathOperation(string prompt)
+            {
+                while (true)
+                {
+                    var input = GetCharAnswer(prompt);
+                    if (validMathOperations.Contains(input))
+                        return input;
+
+                    PrintColoredMessage("Please enter a valid character.\n", ConsoleColor.Red);
+                }
+            }
+            char GetCharAnswer(string prompt)
+            {
+                while (true)
+                {
+                    var input = GetAnswer(prompt);
+                    if (input.Length == 1)
+                        return input[0];
+                    PrintColoredMessage("Please enter a single character.\n", ConsoleColor.Red);
+                }
+            }
+            char GetDecimalSeparator()
+            {
+                return Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            }
+            double GetDouble(string prompt)
+            {
+                while (true)
+                {
+                    var input = GetAnswer(prompt);
+
+                    if (ConvertibleToDouble(input))
+                        return double.Parse(input, CultureInfo.InvariantCulture);
+
+                    PrintColoredMessage("Input isn't a valid number, try again.\n", ConsoleColor.Red);
+                }
+            }
+            string GetAnswer(string prompt, bool acceptEnter = false)
             {
                 while (true)
                 {
                     Console.WriteLine(prompt);
                     var input = Console.ReadLine();
+                    // Add an empty line for better readability
+                    Console.WriteLine();
 
                     if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
                         throw new OperationCanceledException();
 
-                    if (!string.IsNullOrWhiteSpace(input))
+                    if (!string.IsNullOrWhiteSpace(input) || acceptEnter)
                         return input;
 
-                    SetColor(ConsoleColor.Red);
-                    Console.WriteLine("Invalid Input, try again.\n");
-                    Console.ResetColor();
+                    PrintColoredMessage("Invalid Input, try again.\n", ConsoleColor.Red);
                 }
+            }
+
+            // Utility methods
+            void PrintColoredMessage(string message, ConsoleColor color)
+            {
+                SetColor(color);
+                Console.WriteLine(message);
+                Console.ResetColor();
+            }
+            void SetColor(ConsoleColor color)
+            {
+                Console.ForegroundColor = color;
             }
         }
     }
