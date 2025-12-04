@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Fujtajbl.Interfaces;
+using Fujtajbl.Models;
 
 namespace Fujtajbl
 {
@@ -12,7 +14,15 @@ namespace Fujtajbl
     {
         static void Main(string[] args)
         {
+            // Define valid operations and their strategies
             char[] validMathOperations = { '+', '-', '*', '/' };
+            Dictionary<char, IOperationStrategy> strategies = new Dictionary<char, IOperationStrategy>
+            {
+                { '+', new AddStrategy() },
+                { '-', new SubtractStrategy() },
+                { '*', new MultiplyStrategy() },
+                { '/', new DivideStrategy() }
+            };
 
             // Application entry point with exception handling
             try
@@ -47,9 +57,14 @@ namespace Fujtajbl
 
                     try
                     {
+                        var strategy = strategies[mathOperation];
+
                         DivideByZeroCheck(secondNum, mathOperation);
-                        result = GetResult(firstNum, secondNum, mathOperation);
+
+                        result = strategy.Execute(firstNum, secondNum);
+
                         OverflowCheck(result, mathOperation);
+
                     }
                     catch (Exception e)
                     {
@@ -69,22 +84,6 @@ namespace Fujtajbl
             bool ConvertibleToDouble(string input)
             {
                 return double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
-            }
-            double GetResult(double firstNum, double secondNum, char operation)
-            {
-                switch (operation)
-                {
-                    case '+':
-                        return firstNum + secondNum;
-                    case '-':
-                        return firstNum - secondNum;
-                    case '*':
-                        return firstNum * secondNum;
-                    case '/': return firstNum / secondNum;
-
-                    default:
-                        throw new InvalidOperationException("Unknown operation.");
-                }
             }
 
             // Exception handling methods
