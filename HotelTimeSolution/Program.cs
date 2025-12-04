@@ -11,32 +11,23 @@ try
 }
 catch (OperationCanceledException)
 {
-    SetColor(ConsoleColor.Yellow);
-    Console.WriteLine("\nApplication terminated by user.");
-    Console.ResetColor();
+    PrintColoredMessage("\nApplication terminated by user.", ConsoleColor.Yellow);
 }
 catch (Exception ex)
 {
-    SetColor(ConsoleColor.Red);
-    Console.WriteLine($"\nUnexpected error: {ex.Message}");
-    Console.ResetColor();
+    PrintColoredMessage($"\nUnexpected error: {ex.Message}", ConsoleColor.Red);
 }
-
 
 void RunApplication()
 {
-    SetColor(ConsoleColor.Cyan);
-    Console.WriteLine("Welcome to IP Validator\n");
-    Console.ResetColor();
+    PrintColoredMessage("Welcome to IP Validator\n", ConsoleColor.Cyan);
 
     var baseIPAddress = GetIpAddress($"Please input base IP Address {exitMessage}:");
 
     PrintMaskOptions();
     var baseMask = GetMaskOption("Select mask by entering its number:");
 
-    SetColor(ConsoleColor.Cyan);
-    Console.WriteLine("\nValidation started! Enter IPs to compare with base address.\n");
-    Console.ResetColor();
+    PrintColoredMessage("\nValidation started! Enter IPs to compare with base address.\n", ConsoleColor.Cyan);
 
     while (true)
     {
@@ -45,23 +36,11 @@ void RunApplication()
         var same = IsInSameSubnet(baseIPAddress, newIp, baseMask);
 
         if (same)
-        {
-            SetColor(ConsoleColor.Green);
-            Console.WriteLine("True");
-        }
+            PrintColoredMessage("True\n", ConsoleColor.Green);
         else
-        {
-            SetColor(ConsoleColor.Red);
-            Console.WriteLine("False");
-        }
-
-        // Add an empty line for better readability
-        Console.WriteLine();
-
-        Console.ResetColor();
+            PrintColoredMessage("False\n", ConsoleColor.Red);
     }
 }
-
 
 IPAddress GetIpAddress(string prompt)
 {
@@ -76,27 +55,21 @@ IPAddress GetIpAddress(string prompt)
         if (IPAddress.TryParse(input, out var ip))
             return ip;
 
-        SetColor(ConsoleColor.Red);
-        Console.WriteLine("Invalid IP address, try again.\n");
-        Console.ResetColor();
+        PrintColoredMessage("Invalid IP address, try again.\n", ConsoleColor.Red);
     }
 }
 
-
 void PrintMaskOptions()
 {
-    Console.WriteLine("\nAvailable Masks:");
+    PrintColoredMessage("\nAvailable Masks:", ConsoleColor.White);
 
     foreach (Mask mask in Enum.GetValues(typeof(Mask)))
     {
-        SetColor(ConsoleColor.Yellow);
-        Console.WriteLine($"{(byte)mask}: {mask.GetDisplayName()}");
-        Console.ResetColor();
+        PrintColoredMessage($"{(byte)mask}: {mask.GetDisplayName()}", ConsoleColor.Yellow);
     }
 
     Console.WriteLine();
 }
-
 
 IPAddress GetMaskOption(string prompt)
 {
@@ -107,23 +80,16 @@ IPAddress GetMaskOption(string prompt)
 
         if (!byte.TryParse(input, out byte prefixValue))
         {
-            SetColor(ConsoleColor.Red);
-            Console.WriteLine("Invalid input. Enter a number.\n");
-            Console.ResetColor();
+            PrintColoredMessage("Invalid input. Enter a number.\n", ConsoleColor.Red);
             continue;
         }
 
         if (Enum.IsDefined(typeof(Mask), prefixValue))
-        {
             return MaskingExtension.GetMask((Mask)prefixValue);
-        }
 
-        SetColor(ConsoleColor.Red);
-        Console.WriteLine("Unknown mask. Try again.\n");
-        Console.ResetColor();
+        PrintColoredMessage("Unknown mask. Try again.\n", ConsoleColor.Red);
     }
 }
-
 
 bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
 {
@@ -143,8 +109,9 @@ bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
     return true;
 }
 
-
-void SetColor(ConsoleColor color)
+void PrintColoredMessage(string message, ConsoleColor color)
 {
     Console.ForegroundColor = color;
+    Console.WriteLine(message);
+    Console.ResetColor();
 }
