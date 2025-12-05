@@ -11,8 +11,10 @@ namespace Maze.Utils
     public static class EngineUtils
     {
         #region Const
-        private static char startLetter = 'S';
-        private static char endletter = 'F';
+
+        private const char StartLetter = 'S';
+        private const char EndLetter = 'F';
+
         #endregion
 
         #region Public
@@ -40,7 +42,7 @@ namespace Maze.Utils
             {
                 for (var j = 0; j < map[i].Count; j++)
                 {
-                    if (map[i][j] == startLetter)
+                    if (map[i][j] == StartLetter)
                     {
                         return (i, j);
                     }
@@ -89,7 +91,7 @@ namespace Maze.Utils
             {
                 for (var j = 0; j < map[i].Count; j++)
                 {
-                    if (map[i][j] == endletter)
+                    if (map[i][j] == EndLetter)
                     {
                         return (i, j);
                     }
