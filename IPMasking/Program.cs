@@ -36,11 +36,12 @@ void RunApplication()
     PrintColoredMessage("\nConfiguration:", ConsoleColor.Cyan);
     PrintColoredMessage($"IP Address:\t{baseIPAddress}", ConsoleColor.DarkCyan);
     PrintColoredMessage($"Mask:\t\t{baseMask}", ConsoleColor.DarkCyan);
+
     PrintColoredMessage("\nValidation started! Enter IPs to compare with base address. \n", ConsoleColor.Cyan);
 
     while (true)
     {
-        var newIp = GetIpAddress($"Please input IP Address:");
+        var newIp = GetIpAddress($"Please input IP Address to test:");
 
         var same = IsInSameSubnet(baseIPAddress, newIp, baseMask);
 
@@ -49,9 +50,6 @@ void RunApplication()
             PrintColoredMessage(sameSubnetMessage, ConsoleColor.Green);
         else
             PrintColoredMessage(differentSubnetMessage, ConsoleColor.Red);
-
-        // Don't need to check the result, just continue or exit
-        GetAnswer("If you wanna validate another IP Address type anything:", ConsoleColor.Cyan, true);
     }
 }
 
@@ -116,18 +114,17 @@ void PrintMaskOptions()
 
     Console.WriteLine();
 }
-string GetAnswer(string prompt, ConsoleColor color = ConsoleColor.White, bool acceptEnter = false)
+string GetAnswer(string prompt)
 {
     while (true)
     {
-        PrintColoredMessage(prompt, color);
+        PrintColoredMessage(prompt, ConsoleColor.DarkYellow);
         var input = Console.ReadLine();
-        // Add an empty line for better readability
 
         if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
             throw new OperationCanceledException();
 
-        if (!string.IsNullOrWhiteSpace(input) || acceptEnter)
+        if (!string.IsNullOrWhiteSpace(input))
             return input;
 
         PrintColoredMessage("Invalid Input, try again.\n", ConsoleColor.Red);

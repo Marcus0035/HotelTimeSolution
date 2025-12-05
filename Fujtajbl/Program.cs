@@ -14,8 +14,6 @@ namespace Fujtajbl
     {
         static void Main(string[] args)
         {
-            // Define valid operations and their strategies
-            char[] validMathOperations = { '+', '-', '*', '/' };
             Dictionary<char, IOperationStrategy> strategies = new Dictionary<char, IOperationStrategy>
             {
                 { '+', new AddStrategy() },
@@ -51,16 +49,16 @@ namespace Fujtajbl
                     var firstNum = GetDouble("Please enter the first number:");
                     var secondNum = GetDouble("Please enter the second number:");
 
-                    var mathOperation = GetMathOperation($"Please enter the math operation ({string.Concat(validMathOperations)}):");
+                    var mathOperation = GetMathOperation($"Please enter the math operation ({string.Concat(strategies.Keys)}):");
 
                     double result;
 
                     try
                     {
-                        var strategy = strategies[mathOperation];
 
                         DivideByZeroCheck(secondNum, mathOperation);
 
+                        var strategy = strategies[mathOperation];
                         result = strategy.Execute(firstNum, secondNum);
 
                         OverflowCheck(result, mathOperation);
@@ -75,15 +73,9 @@ namespace Fujtajbl
                     PrintColoredMessage($"{firstNum} {mathOperation} {secondNum} = {result} \n", ConsoleColor.Green);
 
                     // Don't need to check the result, just continue or exit
-                    GetAnswer("If you wanna continue type anything:", true);
+                    GetAnswer("If you wanna continue type anything:", true, ConsoleColor.Cyan);
                 }
 
-            }
-
-            // Validation methods
-            bool ConvertibleToDouble(string input)
-            {
-                return double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
             }
 
             // Exception handling methods
@@ -98,13 +90,19 @@ namespace Fujtajbl
                     throw new OverflowException($"Overflow occurred during '{operation}' operation.");
             }
 
+            // Validation methods
+            bool ConvertibleToDouble(string input)
+            {
+                return double.TryParse(input, NumberStyles.Float, CultureInfo.InvariantCulture, out _);
+            }
+
             // Input methods
             char GetMathOperation(string prompt)
             {
                 while (true)
                 {
                     var input = GetCharAnswer(prompt);
-                    if (validMathOperations.Contains(input))
+                    if (strategies.Keys.Contains(input))
                         return input;
 
                     PrintColoredMessage("Please enter a valid character.\n", ConsoleColor.Red);
@@ -120,10 +118,6 @@ namespace Fujtajbl
                     PrintColoredMessage("Please enter a single character.\n", ConsoleColor.Red);
                 }
             }
-            char GetDecimalSeparator()
-            {
-                return Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
             double GetDouble(string prompt)
             {
                 while (true)
@@ -136,14 +130,16 @@ namespace Fujtajbl
                     PrintColoredMessage("Input isn't a valid number, try again.\n", ConsoleColor.Red);
                 }
             }
-            string GetAnswer(string prompt, bool acceptEnter = false)
+            char GetDecimalSeparator()
+            {
+                return Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            }
+            string GetAnswer(string prompt, bool acceptEnter = false, ConsoleColor color = ConsoleColor.DarkYellow)
             {
                 while (true)
                 {
-                    Console.WriteLine(prompt);
+                    PrintColoredMessage(prompt, color);
                     var input = Console.ReadLine();
-                    // Add an empty line for better readability
-                    Console.WriteLine();
 
                     if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
                         throw new OperationCanceledException();
@@ -158,13 +154,9 @@ namespace Fujtajbl
             // Utility methods
             void PrintColoredMessage(string message, ConsoleColor color)
             {
-                SetColor(color);
+                Console.ForegroundColor = color;
                 Console.WriteLine(message);
                 Console.ResetColor();
-            }
-            void SetColor(ConsoleColor color)
-            {
-                Console.ForegroundColor = color;
             }
         }
     }
