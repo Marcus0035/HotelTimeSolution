@@ -24,8 +24,10 @@ catch (Exception ex)
 // Main application method
 void RunApplication()
 {
+    var engine = new IPMaskingEngine();
+
     PrintColoredMessage("Welcome to IP Validator", ConsoleColor.Cyan);
-    PrintColoredMessage($"\nInfo:", ConsoleColor.White);
+    PrintColoredMessage($"\nInfo:");
     PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
     var baseIPAddress = GetIpAddress($"Please input base IP Address: ");
@@ -43,7 +45,7 @@ void RunApplication()
     {
         var newIp = GetIpAddress($"Please input IP Address to test:");
 
-        var same = IsInSameSubnet(baseIPAddress, newIp, baseMask);
+        var same = engine.IsInSameSubnet(baseIPAddress, newIp, baseMask);
 
 
         if (same)
@@ -84,28 +86,12 @@ IPAddress GetMaskOption(string prompt)
         PrintColoredMessage("Unknown mask. Try again.\n", ConsoleColor.Red);
     }
 }
-bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
-{
-    var ip1Bytes = ip1.GetAddressBytes();
-    var ip2Bytes = ip2.GetAddressBytes();
-    var maskBytes = mask.GetAddressBytes();
 
-    if (ip1Bytes.Length != ip2Bytes.Length || ip1Bytes.Length != maskBytes.Length)
-        throw new ArgumentException("IP and mask lengths do not match.");
-
-    for (int i = 0; i < ip1Bytes.Length; i++)
-    {
-        if ((ip1Bytes[i] & maskBytes[i]) != (ip2Bytes[i] & maskBytes[i]))
-            return false;
-    }
-
-    return true;
-}
 
 // Display available mask options
 void PrintMaskOptions()
 {
-    PrintColoredMessage("\nAvailable Masks:", ConsoleColor.White);
+    PrintColoredMessage("\nAvailable Masks:");
 
     foreach (Mask mask in Enum.GetValues(typeof(Mask)))
     {
@@ -132,7 +118,7 @@ string GetAnswer(string prompt)
 }
 
 // Utility method
-void PrintColoredMessage(string message, ConsoleColor color)
+void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
 {
     Console.ForegroundColor = color;
     Console.WriteLine(message);

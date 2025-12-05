@@ -39,8 +39,10 @@ namespace Fujtajbl
             // Main application method
             void RunApplication()
             {
+                var engine = new FujtajblEngine(strategies);
+
                 PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
-                PrintColoredMessage($"\nInfo:", ConsoleColor.White);
+                PrintColoredMessage($"\nInfo:");
                 PrintColoredMessage($"For decimal numbers please use '{GetDecimalSeparator()}'", ConsoleColor.DarkCyan);
                 PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
@@ -48,21 +50,12 @@ namespace Fujtajbl
                 {
                     var firstNum = GetDouble("Please enter the first number:");
                     var secondNum = GetDouble("Please enter the second number:");
-
-                    var mathOperation = GetMathOperation($"Please enter the math operation ({string.Concat(strategies.Keys)}):");
-
-                    double result;
+                    var op = GetMathOperation($"Please enter the math operation ({string.Concat(strategies.Keys)}):");
 
                     try
                     {
-
-                        DivideByZeroCheck(secondNum, mathOperation);
-
-                        var strategy = strategies[mathOperation];
-                        result = strategy.Execute(firstNum, secondNum);
-
-                        OverflowCheck(result, mathOperation);
-
+                        var result = engine.Calculate(firstNum, secondNum, op);
+                        PrintColoredMessage($"{firstNum} {op} {secondNum} = {result}\n", ConsoleColor.Green);
                     }
                     catch (Exception e)
                     {
@@ -70,24 +63,9 @@ namespace Fujtajbl
                         continue;
                     }
 
-                    PrintColoredMessage($"{firstNum} {mathOperation} {secondNum} = {result} \n", ConsoleColor.Green);
-
-                    // Don't need to check the result, just continue or exit
                     GetAnswer("If you wanna continue type anything:", true, ConsoleColor.Cyan);
                 }
 
-            }
-
-            // Exception handling methods
-            void DivideByZeroCheck(double number, char operation)
-            {
-                if (number == 0 && operation == '/')
-                    throw new DivideByZeroException("Division by zero is not allowed.");
-            }
-            void OverflowCheck(double result, char operation)
-            {
-                if (double.IsInfinity(result))
-                    throw new OverflowException($"Overflow occurred during '{operation}' operation.");
             }
 
             // Validation methods
@@ -152,7 +130,7 @@ namespace Fujtajbl
             }
 
             // Utility methods
-            void PrintColoredMessage(string message, ConsoleColor color)
+            void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
             {
                 Console.ForegroundColor = color;
                 Console.WriteLine(message);

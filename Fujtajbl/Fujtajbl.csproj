@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FujtajblEngine.cs" />
     <Compile Include="Interfaces\IOperationStrategy.cs" />
     <Compile Include="Models\OperationStrategies.cs" />
     <Compile Include="Program.cs" />
