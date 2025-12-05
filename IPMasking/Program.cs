@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using IPMasking;
-using IPMasking.Extensions;
 using Utilities.Extensions;
 
 const string sameSubnetMessage = "True: IP Addresses are in the same subnet. \n";
@@ -81,7 +80,7 @@ IPAddress GetMaskOption(string prompt)
         }
 
         if (Enum.IsDefined(typeof(Mask), prefixValue))
-            return MaskingExtension.GetMask((Mask)prefixValue);
+            return IPMaskingEngine.GetMask((Mask)prefixValue);
 
         PrintColoredMessage("Unknown mask. Try again.\n", ConsoleColor.Red);
     }

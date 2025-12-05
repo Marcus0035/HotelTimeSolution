@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IPMasking.Core\IPMasking.Core.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>
