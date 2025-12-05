@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36616.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{474B0A72-A78C-4AAD-8C83-0471CD46347D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fujtajbl", "Fujtajbl\Fujtajbl.csproj", "{0A8FA90C-3006-4D6E-B095-700D580E53CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMasking", "IPMasking\IPMasking.csproj", "{0D96D4B5-1094-37A9-DE83-ADA5642039BB}"
@@ -17,16 +15,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fujtajbl.Core", "Fujtajbl.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPMasking.Core", "IPMasking.Core\IPMasking.Core.csproj", "{38E6EE56-FE2E-4B12-9C1D-D8E826770C63}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FujtajblProject", "FujtajblProject", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IPMaskingProject", "IPMaskingProject", "{00B17971-CF3A-479E-9A08-B616B7AEFB14}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MazeProject", "MazeProject", "{B9003402-756F-4A58-9615-AE57B2FCE73B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{474B0A72-A78C-4AAD-8C83-0471CD46347D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A8FA90C-3006-4D6E-B095-700D580E53CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,6 +54,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A8FA90C-3006-4D6E-B095-700D580E53CA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{0D96D4B5-1094-37A9-DE83-ADA5642039BB} = {00B17971-CF3A-479E-9A08-B616B7AEFB14}
+		{3AA1940A-06AD-439C-B9D9-82EA8FC19D88} = {B9003402-756F-4A58-9615-AE57B2FCE73B}
+		{1E3DE41E-47D9-46AE-8E5A-8164B118C3B9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{38E6EE56-FE2E-4B12-9C1D-D8E826770C63} = {00B17971-CF3A-479E-9A08-B616B7AEFB14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AB189DB-5A30-4BF9-8A8C-5D28D86E97D6}

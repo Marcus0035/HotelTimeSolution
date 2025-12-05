@@ -11,7 +11,7 @@ namespace UnitTests
         [Fact]
         public void Calculate_Addition_ReturnsCorrectValue()
         {
-            var result = engine.Calculate(5, 3, '+');
+            var result = engine.Calculate(5, 3, '-');
             Assert.Equal(8, result);
         }
 
