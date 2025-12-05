@@ -43,15 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FujtajblEngine.cs" />
-    <Compile Include="Interfaces\IOperationStrategy.cs" />
-    <Compile Include="Models\OperationStrategies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Fujtajbl.Core\Fujtajbl.Core.csproj">
+      <Project>{1e3de41e-47d9-46ae-8e5a-8164b118c3b9}</Project>
+      <Name>Fujtajbl.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,14 +14,6 @@ namespace Fujtajbl
     {
         static void Main(string[] args)
         {
-            Dictionary<char, IOperationStrategy> strategies = new Dictionary<char, IOperationStrategy>
-            {
-                { '+', new AddStrategy() },
-                { '-', new SubtractStrategy() },
-                { '*', new MultiplyStrategy() },
-                { '/', new DivideStrategy() }
-            };
-
             // Application entry point with exception handling
             try
             {
@@ -39,7 +31,7 @@ namespace Fujtajbl
             // Main application method
             void RunApplication()
             {
-                var engine = new FujtajblEngine(strategies);
+                var engine = new FujtajblEngine();
 
                 PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
                 PrintColoredMessage($"\nInfo:");
@@ -50,7 +42,9 @@ namespace Fujtajbl
                 {
                     var firstNum = GetDouble("Please enter the first number:");
                     var secondNum = GetDouble("Please enter the second number:");
-                    var op = GetMathOperation($"Please enter the math operation ({string.Concat(strategies.Keys)}):");
+
+                    var operationsDisplayString = string.Concat(FujtajblEngine.strategies.Keys);
+                    var op = GetMathOperation($"Please enter the math operation ({operationsDisplayString}):");
 
                     try
                     {
@@ -80,7 +74,7 @@ namespace Fujtajbl
                 while (true)
                 {
                     var input = GetCharAnswer(prompt);
-                    if (strategies.Keys.Contains(input))
+                    if (FujtajblEngine.strategies.Keys.Contains(input))
                         return input;
 
                     PrintColoredMessage("Please enter a valid character.\n", ConsoleColor.Red);

@@ -1,4 +1,5 @@
 ﻿using Fujtajbl.Interfaces;
+using Fujtajbl.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,23 @@ namespace Fujtajbl
 {
     public class FujtajblEngine
     {
-        private readonly Dictionary<char, IOperationStrategy> _strategies;
-
-        public FujtajblEngine(Dictionary<char, IOperationStrategy> strategies)
+        public static Dictionary<char, IOperationStrategy> strategies = new Dictionary<char, IOperationStrategy>
         {
-            _strategies = strategies;
-        }
+            { '+', new AddStrategy() },
+            { '-', new SubtractStrategy() },
+            { '*', new MultiplyStrategy() },
+            { '/', new DivideStrategy() }
+        };
 
         public double Calculate(double a, double b, char operation)
         {
-            if (!_strategies.ContainsKey(operation))
+            if (!strategies.ContainsKey(operation))
                 throw new InvalidOperationException("Unknown operation.");
 
             if (operation == '/' && b == 0)
                 throw new DivideByZeroException("Cannot divide by zero.");
 
-            var result = _strategies[operation].Execute(a, b);
+            var result = strategies[operation].Execute(a, b);
 
             if (double.IsInfinity(result))
                 throw new OverflowException("Result overflow.");
