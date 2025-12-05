@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Maze.Interfaces;
 using Maze.Models;
 using Maze.Utils;
 
@@ -43,25 +44,26 @@ namespace Maze
 
                     var startPosition = EngineUtils.GetStartPosition(map);
                     var endPosition = EngineUtils.GetAllEndPositions(map);
-                  
-
+                    
                     PrintUtils.PrepareConsoleForMaze(map);
 
-                    PrintUtils.PrintMap(map);
-
-
-                    var rMidget = new RightMidget('R', startPosition);
-
-                    PrintUtils.PrintMap(EngineUtils.PlaceMidget(rMidget, map));
-
-                    while (!endPosition.Contains(rMidget.Position))
+                    var midgets = new List<MidgetBase>
                     {
-                        Task.Delay(50).Wait();
-                        rMidget.Move(map);
-                        PrintUtils.PrintMap(EngineUtils.PlaceMidget(rMidget, map));
+                        new RightMidget('R', startPosition),
+                        new LeftMidget('L', startPosition)
+                    };
+
+                    while (!midgets.TrueForAll(x => endPosition.Contains(x.Position)))
+                    {
+                        Task.Delay(200).Wait();
+                        foreach (var midget in midgets)
+                        {
+                            midget.Move(map);
+                        }
+
+                        PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));
+
                     }
-
-
 
                     // Don't need to check the result, just continue or exit
                     GetAnswer("If you wanna continue type anything:", true, ConsoleColor.Cyan);

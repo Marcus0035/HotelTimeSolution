@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\MidgetBase.cs" />
+    <Compile Include="BaseClasses\MidgetBase.cs" />
+    <Compile Include="BaseClasses\OneDirectionMidget.cs" />
+    <Compile Include="Models\LeftMidget.cs" />
     <Compile Include="Models\RightMidget.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

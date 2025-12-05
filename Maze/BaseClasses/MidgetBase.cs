@@ -12,7 +12,6 @@ namespace Maze.Interfaces
         #region Properties
         public char Symbol { get; }
         public (int, int) Position { get; set; }
-        protected List<(int, int)> _visitedPositions = new List<(int, int)>();
         #endregion
 
         #region Virtual
@@ -20,7 +19,7 @@ namespace Maze.Interfaces
         #endregion
 
         #region Constructor
-        public MidgetBase(char symbol, (int, int) position)
+        protected MidgetBase(char symbol, (int, int) position)
         {
             Symbol = symbol;
             Position = position;
@@ -78,9 +77,5 @@ namespace Maze.Interfaces
                    col < map[row].Count;
         }
         #endregion
-
-
-
-
     }
 }

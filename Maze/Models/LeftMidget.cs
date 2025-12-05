@@ -4,23 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Maze.BaseClasses;
-using Maze.Interfaces;
 using Maze.Utils;
 
 namespace Maze.Models
 {
-    public class RightMidget : OneDirectionMidget
+    public class LeftMidget : OneDirectionMidget
     {
         protected override IEnumerable<Direction> GetPriorityOrder(Direction current)
         {
             return new List<Direction>()
             {
-                RightOf(current),
-                current,
                 LeftOf(current),
+                current,
+                RightOf(current),
                 BackOf(current),
             };
         }
-        public RightMidget(char symbol, (int, int) position) : base(symbol, position) { }
+        public LeftMidget(char symbol, (int, int) position) : base(symbol, position) { }
     }
 }

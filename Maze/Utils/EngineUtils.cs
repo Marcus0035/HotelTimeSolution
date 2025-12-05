@@ -61,15 +61,16 @@ namespace Maze.Utils
                 (endSquare.Item1 + 1, endSquare.Item2)
             };
         }
-        public static List<List<char>> PlaceMidget(MidgetBase midget, List<List<char>> map)
+        public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
         {
             var tempMap = map
                 .Select(row => row.ToList())
                 .ToList();
-
-            var (x, y) = midget.Position;
-            tempMap[x][y] = midget.Symbol;
-
+            foreach (var midget in midgets)
+            {
+                var (x, y) = midget.Position;
+                tempMap[x][y] = midget.Symbol;
+            }
             return tempMap;
         }
 
