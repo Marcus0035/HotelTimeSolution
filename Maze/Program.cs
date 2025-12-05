@@ -43,22 +43,26 @@ namespace Maze
                     var map = EngineUtils.LoadMazeFromFile(path);
 
                     var startPosition = EngineUtils.GetStartPosition(map);
-                    var endPosition = EngineUtils.GetAllEndPositions(map);
-                    
+                    var endPositions = EngineUtils.GetAllEndPositions(map);
+
                     PrintUtils.PrepareConsoleForMaze(map);
 
                     var midgets = new List<MidgetBase>
                     {
-                        new RightMidget('R', startPosition),
-                        new LeftMidget('L', startPosition)
+                        new RightMidget('R', startPosition, endPositions),
+                        new LeftMidget('L', startPosition, endPositions),
+                        new StartrekMidget('s', startPosition, endPositions)
                     };
 
-                    while (!midgets.TrueForAll(x => endPosition.Contains(x.Position)))
+                    while (!midgets.TrueForAll(x => endPositions.Contains(x.Position)))
                     {
                         Task.Delay(200).Wait();
                         foreach (var midget in midgets)
                         {
-                            midget.Move(map);
+                            midget.IsInFinish = endPositions.Contains(midget.Position);
+                                
+                            if (!midget.IsInFinish)
+                                midget.Move(map);
                         }
 
                         PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));

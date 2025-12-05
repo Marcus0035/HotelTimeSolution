@@ -7,22 +7,37 @@ using Maze.Utils;
 
 namespace Maze.Interfaces
 {
-    public class MidgetBase
+    public abstract class MidgetBase
     {
         #region Properties
         public char Symbol { get; }
         public (int, int) Position { get; set; }
-        #endregion
-
-        #region Virtual
-        public virtual void Move(List<List<char>> map) { }
+        protected List<(int, int)> EndPositions { get; set; }
+        public bool IsInFinish { get; set; }
         #endregion
 
         #region Constructor
-        protected MidgetBase(char symbol, (int, int) position)
+        protected MidgetBase(char symbol, (int, int) position, List<(int, int)> endPositions)
         {
             Symbol = symbol;
             Position = position;
+            EndPositions = endPositions;
+        }
+        #endregion
+
+        #region Abstract
+        public abstract void PerformMove(List<List<char>> map);
+        #endregion
+
+        #region Public
+        public void Move(List<List<char>> map)
+        {
+            if (IsInFinish)
+                return;
+
+            PerformMove(map);
+
+            IsInFinish = EndPositions.Contains(Position);
         }
         #endregion
 

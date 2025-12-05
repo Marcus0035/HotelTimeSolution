@@ -53,13 +53,19 @@ namespace Maze.Utils
         {
             var endSquare = GetEndPosition(map);
 
-            return new List<(int, int)>()
+            var candidates = new List<(int, int)>()
             {
                 (endSquare.Item1, endSquare.Item2 - 1),
                 (endSquare.Item1, endSquare.Item2 + 1),
                 (endSquare.Item1 - 1, endSquare.Item2),
                 (endSquare.Item1 + 1, endSquare.Item2)
             };
+
+            return candidates
+                .Where(pos => pos.Item1 >= 0 && pos.Item1 < map.Count &&
+                              pos.Item2 >= 0 && pos.Item2 < map[0].Count &&
+                              map[pos.Item1][pos.Item2] == ' ')
+                .ToList();
         }
         public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
         {

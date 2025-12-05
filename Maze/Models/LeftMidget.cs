@@ -10,6 +10,11 @@ namespace Maze.Models
 {
     public class LeftMidget : OneDirectionMidget
     {
+        public LeftMidget(char symbol, (int, int) position, List<(int, int)> endPositions) 
+            : base(symbol, position, endPositions)
+        {
+        }
+
         protected override IEnumerable<Direction> GetPriorityOrder(Direction current)
         {
             return new List<Direction>()
@@ -20,6 +25,6 @@ namespace Maze.Models
                 BackOf(current),
             };
         }
-        public LeftMidget(char symbol, (int, int) position) : base(symbol, position) { }
+        
     }
 }

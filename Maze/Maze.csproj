@@ -48,6 +48,7 @@
     <Compile Include="BaseClasses\OneDirectionMidget.cs" />
     <Compile Include="Models\LeftMidget.cs" />
     <Compile Include="Models\RightMidget.cs" />
+    <Compile Include="Models\StartrekMidget.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EngineUtils.cs" />
