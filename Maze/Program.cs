@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Maze.Models;
 using Maze.Utils;
 
 namespace Maze
@@ -30,26 +29,43 @@ namespace Maze
             void RunApplication()
             {
                 PrintColoredMessage("Welcome to Maze Solver", ConsoleColor.Cyan);
-                PrintColoredMessage($"\nInfo:", ConsoleColor.White);
+                PrintColoredMessage($"\nInfo:");
                 PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
                 while (true)
                 {
-                    var path = GetFilePath("Please enter the path:");
+                    //edit
+                    //var path = GetFilePath("Please enter the path:");
 
-                    var map = MazeUtils.LoadMazeFromFile(path);
+                    var path = @"C:\Users\marek\Downloads\Maze\Maze.dat";
 
-                    MazeUtils.PrepareConsoleForMaze(map);
+                    var map = EngineUtils.LoadMazeFromFile(path);
 
-                    MazeUtils.PrintMaze(map);
+                    var startPosition = EngineUtils.GetStartPosition(map);
+                    var endPosition = EngineUtils.GetAllEndPositions(map);
+                  
 
+                    PrintUtils.PrepareConsoleForMaze(map);
+
+                    PrintUtils.PrintMap(map);
+
+
+                    var rMidget = new RightMidget('R', startPosition);
+
+                    PrintUtils.PrintMap(EngineUtils.PlaceMidget(rMidget, map));
+
+                    while (!endPosition.Contains(rMidget.Position))
+                    {
+                        Task.Delay(50).Wait();
+                        rMidget.Move(map);
+                        PrintUtils.PrintMap(EngineUtils.PlaceMidget(rMidget, map));
+                    }
 
 
 
                     // Don't need to check the result, just continue or exit
                     GetAnswer("If you wanna continue type anything:", true, ConsoleColor.Cyan);
                 }
-
             }
 
             // Input methods
@@ -58,11 +74,12 @@ namespace Maze
                 while (true)
                 {
                     var input = GetAnswer("Enter Path:");
-                    if (System.IO.Directory.Exists(input) || File.Exists(input))
+                    if (Directory.Exists(input) || File.Exists(input))
                         return input;
                     PrintColoredMessage("Path does not exist, try again.\n", ConsoleColor.Red);
                 }
             }
+
             string GetAnswer(string prompt, bool acceptEnter = false, ConsoleColor color = ConsoleColor.DarkYellow)
             {
                 while (true)
@@ -81,12 +98,13 @@ namespace Maze
             }
 
             // Utility methods
-            void PrintColoredMessage(string message, ConsoleColor color)
+            void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
             {
                 Console.ForegroundColor = color;
                 Console.WriteLine(message);
                 Console.ResetColor();
             }
+
         }
     }
 }
