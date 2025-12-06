@@ -12,8 +12,7 @@ namespace Maze
 {
     internal class Program
     {
-        #region Const
-
+        // Configuration
         private static Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
         {
             { MapTile.Start, 'S' },
@@ -21,7 +20,10 @@ namespace Maze
             { MapTile.Path, ' '},
             { MapTile.Wall, '#' }
         };
-        #endregion
+
+        private static int Delay = 50;
+
+
         static void Main(string[] args)
         {
             // Application entry point with exception handling
@@ -42,27 +44,21 @@ namespace Maze
             void RunApplication()
             {
                 PrintColoredMessage("Welcome to Maze Solver", ConsoleColor.Cyan);
-                PrintColoredMessage($"\nInfo:");
+                PrintColoredMessage("\nInfo:");
                 PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
                 while (true)
                 {
-                    //edit
-                    //var path = GetFilePath("Please enter the path:");
+                    var path = GetFilePath("Please enter the path:");
 
-                    var path = @"C:\Users\marek\Downloads\Maze\Maze.dat";
-
+                    // Initialize midgets
                     var map = EngineUtils.LoadMazeFromFile(path);
-
-
                     var startSymbol = TileSymbols[MapTile.Start];
                     var endSymbol = TileSymbols[MapTile.End];
                     var pathSymbol = TileSymbols[MapTile.Path];
 
                     var startPosition = EngineUtils.GetStartPosition(map, startSymbol);
                     var endPositions = EngineUtils.GetAllEndPositions(map, endSymbol, pathSymbol);
-
-                    PrintUtils.PrepareConsoleForMaze(map);
 
                     var midgets = new List<Midget>
                     {
@@ -72,16 +68,19 @@ namespace Maze
                         new GuidedMidget('G', startPosition, endPositions, map, TileSymbols)
                     };
 
+                    PrintUtils.PrepareConsoleBeforeStart(map);
+
                     while (!midgets.TrueForAll(x => x.HasReachedEnd))
                     {
-                        Task.Delay(50).Wait();
+                        Task.Delay(Delay).Wait();
+
                         foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
-                        {
                             midget.Move();
-                        }
 
                         PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));
                     }
+
+                    PrintUtils.PrepareConsoleAfterEnd();
 
                     // Don't need to check the result, just continue or exit
                     GetAnswer("If you wanna continue type anything:", true, ConsoleColor.Cyan);
@@ -93,13 +92,12 @@ namespace Maze
             {
                 while (true)
                 {
-                    var input = GetAnswer("Enter Path:");
+                    var input = GetAnswer(prompt);
                     if (Directory.Exists(input) || File.Exists(input))
                         return input;
                     PrintColoredMessage("Path does not exist, try again.\n", ConsoleColor.Red);
                 }
             }
-
             string GetAnswer(string prompt, bool acceptEnter = false, ConsoleColor color = ConsoleColor.DarkYellow)
             {
                 while (true)
