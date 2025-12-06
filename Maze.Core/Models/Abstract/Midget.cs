@@ -10,14 +10,16 @@ namespace Maze.Core.Models.Abstract
         public bool HasReachedEnd { get; private set; }
         public ConsoleColor Color { get; }
         public Point Position { get; protected set; }
+        protected MovementService MovementService { get; }
         #endregion
 
         #region Constructor
-        protected Midget(char symbol, Point startPosition, ConsoleColor color)
+        protected Midget(char symbol, Point startPosition, ConsoleColor color, MovementService movementService)
         {
             Symbol = symbol;
             Position = startPosition;
             Color = color;
+            MovementService = movementService;
         }
         #endregion
 
@@ -32,12 +34,8 @@ namespace Maze.Core.Models.Abstract
 
             PerformMove();
 
-            HasReachedEnd = HasReachedFinish();
+            HasReachedEnd = MovementService.HasReachedFinish(Position);
         }
-        #endregion
-
-        #region Private
-        private bool HasReachedFinish() => MapUtils.EndPositions.Contains(Position);
         #endregion
     }
 }

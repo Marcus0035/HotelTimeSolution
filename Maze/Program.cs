@@ -40,9 +40,10 @@ namespace Maze
                     var path = GetFilePath("Please enter the path:");
 
                     MazeConfiguration.SetUpConfiguration(path);
+
                     var midgets = MazeConfiguration.GetMidgets();
 
-                    PrintUtils.PrepareConsoleBeforeStart();
+                    PrintUtils.PrepareConsoleBeforeStart(MazeConfiguration.MazeContext.Map);
 
                     while (!midgets.TrueForAll(x => x.HasReachedEnd))
                     {
@@ -51,15 +52,8 @@ namespace Maze
                         foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
                             midget.Move();
 
-                        PrintUtils.PrintMapWithMidgets(midgets);
+                        PrintUtils.PrintMap(midgets, MazeConfiguration.MazeContext.Map);
                     }
-
-
-                    PrintUtils.PrintMapWithMidgets(midgets);
-
-                    PrintUtils.PrepareConsoleBeforeStart();
-
-
 
                     PrintUtils.PrepareConsoleAfterEnd();
 

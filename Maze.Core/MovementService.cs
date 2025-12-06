@@ -5,12 +5,27 @@ using Maze.Core.Models;
 
 namespace Maze.Core.Utils
 {
-    public static class MoveUtils
+    public class MovementService
     {
-      
+        #region Properties
+        public readonly MazeContext MazeContext;
+        #endregion
+
+        #region Constructor
+        public MovementService(MazeContext mazeContext)
+        {
+            MazeContext = mazeContext;
+        }
+        #endregion
 
         #region Public
-        public static Point PointAfterMove(Point point, Direction direction)
+
+        public bool HasReachedFinish(Point position)
+        {
+            return MazeContext.EndPositions.Contains(position);
+        }
+
+        public Point PointAfterMove(Point point, Direction direction)
         {
             switch (direction)
             {
@@ -27,7 +42,7 @@ namespace Maze.Core.Utils
             }
         }
 
-        public static List<Direction> PossibleNextDirections(Point point)
+        public List<Direction> PossibleNextDirections(Point point)
         {
             var possibleMoves = new List<Direction>();
 
@@ -40,7 +55,7 @@ namespace Maze.Core.Utils
             return possibleMoves;
         }
 
-        public static List<Point> GetAllPossibleNextPositions(Point point)
+        public List<Point> GetAllPossibleNextPositions(Point point)
         {
             var nextDirections = PossibleNextDirections(point);
             return nextDirections.Select(x => PointAfterMove(point, x)).ToList();
@@ -48,41 +63,41 @@ namespace Maze.Core.Utils
         #endregion
 
         #region Private
-        private static bool CanMoveToDirection(Point point, Direction direction)
+        private bool CanMoveToDirection(Point point, Direction direction)
         {
             var row = point.X;
             var col = point.Y;
-            var pathSymbol = MapUtils.TileSymbols[MapTile.Path];
+            var pathSymbol = MazeContext.Tiles[MapTile.Path];
 
             switch (direction)
             {
                 case Direction.Up:
                     if (!IsInsideMap(new Point(point.X - 1, point.Y))) return false;
-                    return MapUtils.Map[row - 1][col] == pathSymbol;
+                    return MazeContext.Map[row - 1][col] == pathSymbol;
 
                 case Direction.Down:
                     if (!IsInsideMap(new Point(point.X + 1, point.Y))) return false;
-                    return MapUtils.Map[row + 1][col] == pathSymbol;
+                    return MazeContext.Map[row + 1][col] == pathSymbol;
 
                 case Direction.Left:
                     if (!IsInsideMap(new Point(point.X, point.Y - 1))) return false;
-                    return MapUtils.Map[row][col - 1] == pathSymbol;
+                    return MazeContext.Map[row][col - 1] == pathSymbol;
 
                 case Direction.Right:
                     if (!IsInsideMap(new Point(point.X, point.Y + 1))) return false;
-                    return MapUtils.Map[row][col + 1] == pathSymbol;
+                    return MazeContext.Map[row][col + 1] == pathSymbol;
 
                 default:
                     return false;
             }
         }
 
-        private static bool IsInsideMap(Point point)
+        private bool IsInsideMap(Point point)
         {
             return point.X >= 0 &&
-                   point.X < MapUtils.Map.Count &&
+                   point.X < MazeContext.Map.Count &&
                    point.Y >= 0 &&
-                   point.Y < MapUtils.Map[point.X].Count;
+                   point.Y < MazeContext.Map[point.X].Count;
         }
         #endregion
     }

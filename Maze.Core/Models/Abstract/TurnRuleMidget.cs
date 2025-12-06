@@ -12,21 +12,21 @@ namespace Maze.Core.Models.Abstract
         #endregion
 
         #region Constructor
-        protected TurnRuleMidget(char symbol, Point startPosition, ConsoleColor color) 
-            : base(symbol, startPosition, color) { }
+        protected TurnRuleMidget(char symbol, Point startPosition, ConsoleColor color, MovementService movementService) 
+            : base(symbol, startPosition, color, movementService) { }
         #endregion
 
         #region Override
         protected override void PerformMove()
         {
-            var possible = MoveUtils.PossibleNextDirections(Position);
+            var possible = MovementService.PossibleNextDirections(Position);
 
             foreach (var dir in PriorityDirections)
             {
                 if (!possible.Contains(dir)) continue;
 
                 CurrentDirection = dir;
-                Position = MoveUtils.PointAfterMove(Position, dir);
+                Position = MovementService.PointAfterMove(Position, dir);
                 return;
             }
         }

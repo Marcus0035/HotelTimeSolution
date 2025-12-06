@@ -7,8 +7,8 @@ namespace Maze.Core.Models.Midgets
 {
     public class RightMidget : TurnRuleMidget
     {
-        public RightMidget(char symbol, Point startPosition, ConsoleColor color) 
-            : base(symbol, startPosition, color) { }
+        public RightMidget(char symbol, Point startPosition, ConsoleColor color, MovementService movementService) 
+            : base(symbol, startPosition, color, movementService) { }
 
         protected override IEnumerable<Direction> GetPriorityOrder(Direction current)
         {

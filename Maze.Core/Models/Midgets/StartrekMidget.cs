@@ -26,8 +26,8 @@ namespace Maze.Core.Models.Midgets
         #endregion
 
         #region Constructor
-        public StartrekMidget(char symbol, Point startPosition, ConsoleColor color) 
-            : base(symbol, startPosition, color) { }
+        public StartrekMidget(char symbol, Point startPosition, ConsoleColor color, MovementService movementService) 
+            : base(symbol, startPosition, color, movementService) { }
         #endregion
 
         #region Override
@@ -43,7 +43,7 @@ namespace Maze.Core.Models.Midgets
 
             if (_executeTime > DateTime.Now) return;
 
-            Position = MapUtils.EndPositions.First();
+            Position = MovementService.MazeContext.EndPositions.First();
         }
         #endregion
     }

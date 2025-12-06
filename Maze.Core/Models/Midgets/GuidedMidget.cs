@@ -12,15 +12,15 @@ namespace Maze.Core.Models.Midgets
         #endregion
 
         #region Constructor
-        public GuidedMidget(char symbol, Point position, ConsoleColor color)
-            : base(symbol, position, color) { }
+        public GuidedMidget(char symbol, Point position, ConsoleColor color, MovementService movementService)
+            : base(symbol, position, color, movementService) { }
         #endregion
 
         #region Override
         protected override void PerformMove()
         {
             if (_bestRoute == null || _bestRoute.Count == 0)
-                _bestRoute = FindPathBFS(Position, MapUtils.EndPositions[0]);
+                _bestRoute = FindPathBFS(Position, MovementService.MazeContext.EndPositions[0]);
 
             Position = _bestRoute[_bestRoute.IndexOf(Position) + 1];
         }
@@ -40,12 +40,12 @@ namespace Maze.Core.Models.Midgets
             {
                 var current = queue.Dequeue();
 
-                if (MapUtils.EndPositions.Contains(current))
+                if (MovementService.MazeContext.EndPositions.Contains(current))
                 {
                     return ReconstructPath(parent, start, end);
                 }
 
-                foreach (var neighbour in MoveUtils.GetAllPossibleNextPositions(current))
+                foreach (var neighbour in MovementService.GetAllPossibleNextPositions(current))
                 {
                     if (!visited.Add(neighbour))
                         continue;

@@ -8,15 +8,15 @@ namespace Maze
 {
     public static class PrintUtils
     {
-        public static void PrintMapWithMidgets(List<Midget> midgets)
+        public static void PrintMap(List<Midget> midgets, List<List<char>> map)
         {
             Console.SetCursorPosition(0, 0);
 
-            for (var x = 0; x < MapUtils.Map.Count; x++)
+            for (var x = 0; x < map.Count; x++)
             {
-                for (var y = 0; y < MapUtils.Map[x].Count; y++)
+                for (var y = 0; y < map[x].Count; y++)
                 {
-                    var tile = MapUtils.Map[x][y];
+                    var tile = map[x][y];
 
                     var midget = midgets.FirstOrDefault(m => m.Position.X == x && m.Position.Y == y);
 
@@ -37,10 +37,10 @@ namespace Maze
 
             Console.ForegroundColor = ConsoleColor.White; // reset
         }
-        public static void PrepareConsoleBeforeStart()
+        public static void PrepareConsoleBeforeStart(List<List<char>> map)
         {
             Console.CursorVisible = false;
-            Console.SetWindowSize(MapUtils.Map.Count, MapUtils.Map.Max(x => x.Count));
+            Console.SetWindowSize(map.Count, map.Max(x => x.Count));
             Console.Clear();
         }
         public static void PrepareConsoleAfterEnd()
