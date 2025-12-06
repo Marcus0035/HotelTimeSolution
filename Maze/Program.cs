@@ -1,15 +1,20 @@
-﻿using System;
+﻿using Maze.Interfaces;
+using Maze.Models;
+using Maze.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Maze.Interfaces;
-using Maze.Models;
-using Maze.Utils;
 
 namespace Maze
 {
     internal class Program
     {
+        #region Const
+        private const char StartLetter = 'S';
+        private const char EndLetter = 'F';
+        private const char PathLetter = ' ';
+        #endregion
         static void Main(string[] args)
         {
             // Application entry point with exception handling
@@ -42,8 +47,8 @@ namespace Maze
 
                     var map = EngineUtils.LoadMazeFromFile(path);
 
-                    var startPosition = EngineUtils.GetStartPosition(map);
-                    var endPositions = EngineUtils.GetAllEndPositions(map);
+                    var startPosition = EngineUtils.GetStartPosition(map, StartLetter);
+                    var endPositions = EngineUtils.GetAllEndPositions(map, EndLetter, PathLetter);
 
                     PrintUtils.PrepareConsoleForMaze(map);
 
@@ -56,15 +61,13 @@ namespace Maze
 
                     while (!midgets.TrueForAll(x => endPositions.Contains(x.Position)))
                     {
-                        Task.Delay(200).Wait();
+                        Task.Delay(50).Wait();
                         foreach (var midget in midgets)
                         {
-                            if (!midget.IsInFinish)
-                                midget.Move(map);
+                            midget.Move(map);
                         }
 
                         PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));
-
                     }
 
                     // Don't need to check the result, just continue or exit

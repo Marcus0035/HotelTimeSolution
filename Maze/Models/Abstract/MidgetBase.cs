@@ -33,12 +33,13 @@ namespace Maze.Interfaces
         #region Public
         public void Move(List<List<char>> map)
         {
-            if (IsInFinish)
-                return;
+            if (IsInFinish) return;
 
             PerformMove(map);
 
-            IsInFinish = EndPositions.Contains(Position);
+            if (!HasReachedFinish()) return;
+
+            IsInFinish = true;
         }
         #endregion
 
@@ -58,10 +59,11 @@ namespace Maze.Interfaces
         #endregion
 
         #region Private
+        private bool HasReachedFinish() => EndPositions.Contains(Position);
         private bool CanMoveToDirection(Direction direction, List<List<char>> map)
         {
-            var row = Position.x;
-            var col = Position.y;
+            var row = Position.X;
+            var col = Position.Y;
 
             switch (direction)
             {

@@ -96,16 +96,16 @@ namespace Maze.BaseClasses
             switch (direction)
             {
                 case Direction.Up:
-                    Position = new Point(Position.x - 1, Position.y);
+                    Position = new Point(Position.X - 1, Position.Y);
                     break;
                 case Direction.Down:
-                    Position = new Point(Position.x + 1, Position.y);
+                    Position = new Point(Position.X + 1, Position.Y);
                     break;
                 case Direction.Left:
-                    Position = new Point(Position.x, Position.y - 1);
+                    Position = new Point(Position.X, Position.Y - 1);
                     break;
                 case Direction.Right:
-                    Position = new Point(Position.x, Position.y + 1);
+                    Position = new Point(Position.X, Position.Y + 1);
                     break;
             }
         }
