@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.BaseClasses;
+﻿using System.Collections.Generic;
+using Maze.Models.Abstract;
 using Maze.Utils;
 
-namespace Maze.Models
+namespace Maze.Models.Midgets
 {
-    public class LeftMidget : OneDirectionMidget
+    public class LeftMidget : TurnRuleMidget
     {
         public LeftMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols) : base(symbol, position, endPositions, map, tileSymbols)
         {

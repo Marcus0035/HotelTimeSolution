@@ -1,5 +1,4 @@
-﻿using Maze.Interfaces;
-using Maze.Models;
+﻿using Maze.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Models.Abstract;
 
 namespace Maze.Utils
 {
@@ -33,7 +33,7 @@ namespace Maze.Utils
                 throw new FileLoadException("Failed while loading map");
             }
         }
-        public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
+        public static List<List<char>> PlaceAllMidgets(List<Midget> midgets, List<List<char>> map)
         {
             var tempMap = map
                 .Select(row => row.ToList())

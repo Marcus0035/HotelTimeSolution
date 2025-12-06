@@ -1,10 +1,11 @@
-﻿using Maze.Interfaces;
-using Maze.Models;
+﻿using Maze.Models;
 using Maze.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Maze.Models.Abstract;
 using Maze.Models.Midgets;
 
 namespace Maze
@@ -63,7 +64,7 @@ namespace Maze
 
                     PrintUtils.PrepareConsoleForMaze(map);
 
-                    var midgets = new List<MidgetBase>
+                    var midgets = new List<Midget>
                     {
                         new RightMidget('R', startPosition, endPositions, map, TileSymbols),
                         new LeftMidget('L', startPosition, endPositions, map, TileSymbols),
@@ -71,10 +72,10 @@ namespace Maze
                         new GuidedMidget('G', startPosition, endPositions, map, TileSymbols)
                     };
 
-                    while (!midgets.TrueForAll(x => x.IsInFinish))
+                    while (!midgets.TrueForAll(x => x.HasReachedEnd))
                     {
                         Task.Delay(50).Wait();
-                        foreach (var midget in midgets)
+                        foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
                         {
                             midget.Move();
                         }

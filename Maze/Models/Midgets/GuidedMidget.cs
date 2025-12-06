@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Maze.Interfaces;
+using Maze.Models.Abstract;
 using Maze.Utils;
 
 namespace Maze.Models.Midgets
 {
-    public class GuidedMidget : MidgetBase
+    public class GuidedMidget : Midget
     {
         #region Properties
         private List<Point> _bestRoute;
@@ -21,7 +21,8 @@ namespace Maze.Models.Midgets
         #endregion
 
         #region Override
-        public override void PerformMove()
+
+        protected override void PerformMove()
         {
             if (_bestRoute == null || _bestRoute.Count == 0)
                 _bestRoute = FindPathBFS(Position, EndPositions[0]);

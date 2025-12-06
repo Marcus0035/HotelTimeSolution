@@ -1,26 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.Models;
 using Maze.Utils;
 
-namespace Maze.Interfaces
+namespace Maze.Models.Abstract
 {
-    public abstract class MidgetBase
+    public abstract class Midget
     {
         #region Properties
         public char Symbol { get; }
         public Point Position { get; protected set; }
-        public bool IsInFinish { get; private set; }
-        protected List<List<char>> Map { get; }
+        public bool HasReachedEnd { get; private set; }
         protected List<Point> EndPositions { get; }
-        protected Dictionary<MapTile, char> TileSymbols { get; }
+        private List<List<char>> Map { get; }
+        private Dictionary<MapTile, char> TileSymbols { get; }
         #endregion
 
         #region Constructor
-        protected MidgetBase(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
+        protected Midget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
         {
             Symbol = symbol;
             Position = position;
@@ -31,19 +27,36 @@ namespace Maze.Interfaces
         #endregion
 
         #region Abstract
-        public abstract void PerformMove();
+        protected abstract void PerformMove();
+        #endregion
+
+        #region Static
+        protected static Point PointAfterMove(Point point, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return new Point(point.X - 1, point.Y);
+                case Direction.Down:
+                    return new Point(point.X + 1, point.Y);
+                case Direction.Left:
+                    return new Point(point.X, point.Y - 1);
+                case Direction.Right:
+                    return new Point(point.X, point.Y + 1);
+                default:
+                    return point;
+            }
+        }
         #endregion
 
         #region Public
         public void Move()
         {
-            if (IsInFinish) return;
+            if (HasReachedEnd) return;
 
             PerformMove();
 
-            if (!HasReachedFinish()) return;
-
-            IsInFinish = true;
+            HasReachedEnd = HasReachedFinish();
         }
         #endregion
 
@@ -60,23 +73,6 @@ namespace Maze.Interfaces
 
             return possibleMoves;
         }
-        protected Point PointAfterMove(Point point, Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    return new Point(point.X - 1, point.Y);
-                case Direction.Down:
-                    return new Point(point.X + 1, point.Y);
-                case Direction.Left:
-                    return new Point(point.X, point.Y - 1);
-                case Direction.Right:
-                    return new Point(point.X, point.Y + 1);
-                default:
-                    return point;
-            }
-        }
-
         #endregion
 
         #region Private
@@ -109,7 +105,7 @@ namespace Maze.Interfaces
                     return false;
             }
         }
-        protected bool IsInsideMap(Point point)
+        private bool IsInsideMap(Point point)
         {
             return point.X >= 0 &&
                    point.X < Map.Count &&

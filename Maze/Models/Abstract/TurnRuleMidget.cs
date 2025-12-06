@@ -1,30 +1,21 @@
-﻿using Maze.Interfaces;
+﻿using System.Collections.Generic;
 using Maze.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.Models;
 
-namespace Maze.BaseClasses
+namespace Maze.Models.Abstract
 {
-    public abstract class OneDirectionMidget : MidgetBase
+    public abstract class TurnRuleMidget : Midget
     {
         #region Properties
-
-        
-
-        public Direction CurrentDirection { get; set; }
-        private IEnumerable<Direction> priorityDirections => GetPriorityOrder(CurrentDirection);
+        private Direction CurrentDirection { get; set; }
+        private IEnumerable<Direction> PriorityDirections => GetPriorityOrder(CurrentDirection);
         #endregion
 
         #region Override
-        public override void PerformMove()
+        protected override void PerformMove()
         {
             var possible = PossibleNextDirections(Position);
 
-            foreach (var dir in priorityDirections)
+            foreach (var dir in PriorityDirections)
             {
                 if (!possible.Contains(dir)) continue;
 
@@ -90,13 +81,8 @@ namespace Maze.BaseClasses
         }
         #endregion
 
-        #region Private
-      
-        
-        #endregion
-
         #region Constructor
-        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
+        protected TurnRuleMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
             : base(symbol, position, endPositions, map, tileSymbols)
         {
         }

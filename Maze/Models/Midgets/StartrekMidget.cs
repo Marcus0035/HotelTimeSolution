@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Maze.Interfaces;
+using Maze.Models.Abstract;
 using Maze.Utils;
 
-namespace Maze.Models
+namespace Maze.Models.Midgets
 {
-    public class StartrekMidget : MidgetBase
+    public class StartrekMidget : Midget
     {
         #region Const
         // Teleportation delay in milliseconds
@@ -14,23 +14,25 @@ namespace Maze.Models
         private const int TeleportDelayMax = 10;
         #endregion
 
-        #region Constructor
+        #region Properties
+        private DateTime _executeTime { get; set; }
+        #endregion
 
+        #region Constructor
         public StartrekMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols) 
             : base(symbol, position, endPositions, map, tileSymbols)
         {
         }
-
-        private DateTime _executeTime { get; set; }
         #endregion
 
         #region Override
-        public override void PerformMove()
+        protected override void PerformMove()
         {
             if (_executeTime == default)
             {
                 var time = DateTime.Now;
-                _executeTime = time.AddSeconds(GenerateRandomDelay());
+                var delay = GenerateRandomDelay();
+                _executeTime = time.AddSeconds(delay);
                 return;
             }
 
@@ -41,7 +43,6 @@ namespace Maze.Models
         #endregion
 
         #region Private
-
         private int GenerateRandomDelay()
         {
             var random = new Random();
