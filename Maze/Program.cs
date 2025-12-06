@@ -59,8 +59,6 @@ namespace Maze
                         Task.Delay(200).Wait();
                         foreach (var midget in midgets)
                         {
-                            midget.IsInFinish = endPositions.Contains(midget.Position);
-                                
                             if (!midget.IsInFinish)
                                 midget.Move(map);
                         }

@@ -8,9 +8,9 @@ namespace Maze.Utils
 {
     public enum Direction : byte
     {
-        Up = 0, 
-        Down = 1, 
-        Left = 2, 
-        Right = 3
+        Up, 
+        Down, 
+        Left, 
+        Right
     }
 }

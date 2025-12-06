@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Models;
 using Maze.Utils;
 
 namespace Maze.Interfaces
@@ -11,13 +12,13 @@ namespace Maze.Interfaces
     {
         #region Properties
         public char Symbol { get; }
-        public (int, int) Position { get; set; }
-        protected List<(int, int)> EndPositions { get; set; }
+        public Point Position { get; set; }
+        protected List<Point> EndPositions { get; set; }
         public bool IsInFinish { get; set; }
         #endregion
 
         #region Constructor
-        protected MidgetBase(char symbol, (int, int) position, List<(int, int)> endPositions)
+        protected MidgetBase(char symbol, Point position, List<Point> endPositions)
         {
             Symbol = symbol;
             Position = position;
@@ -59,8 +60,8 @@ namespace Maze.Interfaces
         #region Private
         private bool CanMoveToDirection(Direction direction, List<List<char>> map)
         {
-            var row = Position.Item1;
-            var col = Position.Item2;
+            var row = Position.x;
+            var col = Position.y;
 
             switch (direction)
             {

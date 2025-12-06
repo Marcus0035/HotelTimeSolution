@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Maze.Interfaces;
+using Maze.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Maze.Interfaces;
 
 namespace Maze.Utils
 {
@@ -36,7 +38,7 @@ namespace Maze.Utils
                 throw new FileLoadException("Failed while loading map");
             }
         }
-        public static (int, int) GetStartPosition(List<List<char>> map)
+        public static Point GetStartPosition(List<List<char>> map)
         {
             for (var i = 0; i < map.Count; i++)
             {
@@ -44,29 +46,29 @@ namespace Maze.Utils
                 {
                     if (map[i][j] == StartLetter)
                     {
-                        return (i, j);
+                        return new Point(i, j);
                     }
                 }
             }
 
             throw new Exception("Start position not found in the map");
         }
-        public static List<(int, int)> GetAllEndPositions(List<List<char>> map)
+        public static List<Point> GetAllEndPositions(List<List<char>> map)
         {
             var endSquare = GetEndPosition(map);
 
-            var candidates = new List<(int, int)>()
+            var candidates = new List<Point>()
             {
-                (endSquare.Item1, endSquare.Item2 - 1),
-                (endSquare.Item1, endSquare.Item2 + 1),
-                (endSquare.Item1 - 1, endSquare.Item2),
-                (endSquare.Item1 + 1, endSquare.Item2)
+                new Point(endSquare.x, endSquare.y - 1),
+                new Point(endSquare.x, endSquare.y + 1),
+                new Point(endSquare.x - 1, endSquare.y),
+                new Point(endSquare.x + 1, endSquare.y)
             };
 
             return candidates
-                .Where(pos => pos.Item1 >= 0 && pos.Item1 < map.Count &&
-                              pos.Item2 >= 0 && pos.Item2 < map[0].Count &&
-                              map[pos.Item1][pos.Item2] == ' ')
+                .Where(pos => pos.x >= 0 && pos.x < map.Count &&
+                              pos.y >= 0 && pos.y < map[0].Count &&
+                              map[pos.x][pos.y] == ' ')
                 .ToList();
         }
         public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
@@ -76,8 +78,8 @@ namespace Maze.Utils
                 .ToList();
             foreach (var midget in midgets)
             {
-                var (x, y) = midget.Position;
-                tempMap[x][y] = midget.Symbol;
+                var point = midget.Position;
+                tempMap[point.x][point.y] = midget.Symbol;
             }
             return tempMap;
         }
@@ -85,7 +87,7 @@ namespace Maze.Utils
         #endregion
 
         #region Private
-        private static (int, int) GetEndPosition(List<List<char>> map)
+        private static Point GetEndPosition(List<List<char>> map)
         {
             for (var i = 0; i < map.Count; i++)
             {
@@ -93,7 +95,7 @@ namespace Maze.Utils
                 {
                     if (map[i][j] == EndLetter)
                     {
-                        return (i, j);
+                        return new Point(i, j);
                     }
                 }
             }

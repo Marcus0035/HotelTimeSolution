@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Models;
 
 namespace Maze.BaseClasses
 {
@@ -95,23 +96,23 @@ namespace Maze.BaseClasses
             switch (direction)
             {
                 case Direction.Up:
-                    Position = (Position.Item1 - 1, Position.Item2);
+                    Position = new Point(Position.x - 1, Position.y);
                     break;
                 case Direction.Down:
-                    Position = (Position.Item1 + 1, Position.Item2);
+                    Position = new Point(Position.x + 1, Position.y);
                     break;
                 case Direction.Left:
-                    Position = (Position.Item1, Position.Item2 - 1);
+                    Position = new Point(Position.x, Position.y - 1);
                     break;
                 case Direction.Right:
-                    Position = (Position.Item1, Position.Item2 + 1);
+                    Position = new Point(Position.x, Position.y + 1);
                     break;
             }
         }
         #endregion
 
         #region Constructor
-        protected OneDirectionMidget(char symbol, (int, int) position, List<(int, int)> endPositions) : base(symbol, position, endPositions) { }
+        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions) : base(symbol, position, endPositions) { }
         #endregion
     }
 }
