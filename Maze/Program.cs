@@ -64,17 +64,17 @@ namespace Maze
 
                     var midgets = new List<MidgetBase>
                     {
-                        new RightMidget('R', startPosition, endPositions, TileSymbols),
-                        new LeftMidget('L', startPosition, endPositions, TileSymbols),
-                        new StartrekMidget('s', startPosition, endPositions, TileSymbols)
+                        new RightMidget('R', startPosition, endPositions, map, TileSymbols),
+                        new LeftMidget('L', startPosition, endPositions, map, TileSymbols),
+                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols)
                     };
 
-                    while (!midgets.TrueForAll(x => endPositions.Contains(x.Position)))
+                    while (!midgets.TrueForAll(x => x.IsInFinish))
                     {
                         Task.Delay(50).Wait();
                         foreach (var midget in midgets)
                         {
-                            midget.Move(map);
+                            midget.Move();
                         }
 
                         PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));

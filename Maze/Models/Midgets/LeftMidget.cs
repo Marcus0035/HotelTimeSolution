@@ -10,8 +10,7 @@ namespace Maze.Models
 {
     public class LeftMidget : OneDirectionMidget
     {
-        public LeftMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols)
-            : base(symbol, position, endPositions, tileSymbols)
+        public LeftMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols) : base(symbol, position, endPositions, map, tileSymbols)
         {
         }
 

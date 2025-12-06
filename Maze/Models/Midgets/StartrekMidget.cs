@@ -15,9 +15,9 @@ namespace Maze.Models
         #endregion
 
         #region Constructor
-        
-        public StartrekMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols) 
-            : base(symbol, position, endPositions, tileSymbols)
+
+        public StartrekMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols) 
+            : base(symbol, position, endPositions, map, tileSymbols)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Maze.Models
         #endregion
 
         #region Override
-        public override void PerformMove(List<List<char>> map)
+        public override void PerformMove()
         {
             if (_executeTime == default)
             {

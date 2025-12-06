@@ -12,32 +12,34 @@ namespace Maze.Interfaces
     {
         #region Properties
         public char Symbol { get; }
-        public Point Position { get; set; }
+        public Point Position { get; protected set; }
+        public bool IsInFinish { get; private set; }
+        protected List<List<char>> Map { get; }
         protected List<Point> EndPositions { get; }
-        public bool IsInFinish { get; set; }
         private Dictionary<MapTile, char> TileSymbols { get; }
         #endregion
 
         #region Constructor
-        protected MidgetBase(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols)
+        protected MidgetBase(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
         {
             Symbol = symbol;
             Position = position;
             EndPositions = endPositions;
+            Map = map;
             TileSymbols = tileSymbols;
         }
         #endregion
 
         #region Abstract
-        public abstract void PerformMove(List<List<char>> map);
+        public abstract void PerformMove();
         #endregion
 
         #region Public
-        public void Move(List<List<char>> map)
+        public void Move()
         {
             if (IsInFinish) return;
 
-            PerformMove(map);
+            PerformMove();
 
             if (!HasReachedFinish()) return;
 
@@ -46,13 +48,13 @@ namespace Maze.Interfaces
         #endregion
 
         #region Protected
-        protected List<Direction> PossibleNextMoves(List<List<char>> map)
+        protected List<Direction> PossibleNextMoves()
         {
             var possibleMoves = new List<Direction>();
 
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
             {
-                if (CanMoveToDirection(direction, map))
+                if (CanMoveToDirection(direction))
                     possibleMoves.Add(direction);
             }
 
@@ -62,7 +64,7 @@ namespace Maze.Interfaces
 
         #region Private
         private bool HasReachedFinish() => EndPositions.Contains(Position);
-        private bool CanMoveToDirection(Direction direction, List<List<char>> map)
+        private bool CanMoveToDirection(Direction direction)
         {
             var row = Position.X;
             var col = Position.Y;
@@ -71,31 +73,31 @@ namespace Maze.Interfaces
             switch (direction)
             {
                 case Direction.Up:
-                    if (!IsInsideMap(row - 1, col, map)) return false;
-                    return map[row - 1][col] == pathSymbol;
+                    if (!IsInsideMap(row - 1, col)) return false;
+                    return Map[row - 1][col] == pathSymbol;
 
                 case Direction.Down:
-                    if (!IsInsideMap(row + 1, col, map)) return false;
-                    return map[row + 1][col] == pathSymbol;
+                    if (!IsInsideMap(row + 1, col)) return false;
+                    return Map[row + 1][col] == pathSymbol;
 
                 case Direction.Left:
-                    if (!IsInsideMap(row, col - 1, map)) return false;
-                    return map[row][col - 1] == pathSymbol;
+                    if (!IsInsideMap(row, col - 1)) return false;
+                    return Map[row][col - 1] == pathSymbol;
 
                 case Direction.Right:
-                    if (!IsInsideMap(row, col + 1, map)) return false;
-                    return map[row][col + 1] == pathSymbol;
+                    if (!IsInsideMap(row, col + 1)) return false;
+                    return Map[row][col + 1] == pathSymbol;
 
                 default:
                     return false;
             }
         }
-        private bool IsInsideMap(int row, int col, List<List<char>> map)
+        private bool IsInsideMap(int row, int col)
         {
             return row >= 0 &&
-                   row < map.Count &&
+                   row < Map.Count &&
                    col >= 0 &&
-                   col < map[row].Count;
+                   col < Map[row].Count;
         }
         #endregion
     }

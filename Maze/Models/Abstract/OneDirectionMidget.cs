@@ -12,14 +12,17 @@ namespace Maze.BaseClasses
     public abstract class OneDirectionMidget : MidgetBase
     {
         #region Properties
+
+        
+
         public Direction CurrentDirection { get; set; }
         private IEnumerable<Direction> priorityDirections => GetPriorityOrder(CurrentDirection);
         #endregion
 
         #region Override
-        public override void PerformMove(List<List<char>> map)
+        public override void PerformMove()
         {
-            var possible = PossibleNextMoves(map);
+            var possible = PossibleNextMoves();
 
             foreach (var dir in priorityDirections)
             {
@@ -106,12 +109,14 @@ namespace Maze.BaseClasses
                     break;
             }
         }
+        
         #endregion
 
         #region Constructor
-        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols)
-            : base(symbol, position, endPositions, tileSymbols)
-        { }
+        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
+            : base(symbol, position, endPositions, map, tileSymbols)
+        {
+        }
         #endregion
     }
 }
