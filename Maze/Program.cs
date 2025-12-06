@@ -51,22 +51,9 @@ namespace Maze
                 {
                     var path = GetFilePath("Please enter the path:");
 
-                    // Initialize midgets
                     var map = EngineUtils.LoadMazeFromFile(path);
-                    var startSymbol = TileSymbols[MapTile.Start];
-                    var endSymbol = TileSymbols[MapTile.End];
-                    var pathSymbol = TileSymbols[MapTile.Path];
-
-                    var startPosition = EngineUtils.GetStartPosition(map, startSymbol);
-                    var endPositions = EngineUtils.GetAllEndPositions(map, endSymbol, pathSymbol);
-
-                    var midgets = new List<Midget>
-                    {
-                        new RightMidget('R', startPosition, endPositions, map, TileSymbols, ConsoleColor.Yellow),
-                        new LeftMidget('L', startPosition, endPositions, map, TileSymbols, ConsoleColor.Green),
-                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols, ConsoleColor.Blue),
-                        new GuidedMidget('G', startPosition, endPositions, map, TileSymbols, ConsoleColor.DarkMagenta)
-                    };
+                    
+                    var midgets = EngineUtils.SetUpMidgetConfiguration(map, TileSymbols);
 
                     PrintUtils.PrepareConsoleBeforeStart(map);
 
@@ -74,10 +61,10 @@ namespace Maze
                     {
                         Task.Delay(Delay).Wait();
 
-                        foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
+                        foreach (var midget in midgets.Where(x => !x.HasReachedEnd)) 
                             midget.Move();
 
-                        PrintUtils.PrintMap(EngineUtils.PlaceAllMidgets(midgets, map));
+                        PrintUtils.PrintMapWithMidgets(map, midgets);
                     }
 
                     PrintUtils.PrepareConsoleAfterEnd();

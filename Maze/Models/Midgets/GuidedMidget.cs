@@ -15,9 +15,8 @@ namespace Maze.Models.Midgets
         #endregion
 
         #region Constructor
-        public GuidedMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color)
-            : base(symbol, position, endPositions, map, tileSymbols, color)
-        { }
+        public GuidedMidget(char symbol, Point position, ConsoleColor color)
+            : base(symbol, position, color) { }
         #endregion
 
         #region Override

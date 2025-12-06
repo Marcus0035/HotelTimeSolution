@@ -11,6 +11,12 @@ namespace Maze.Models.Abstract
         private IEnumerable<Direction> PriorityDirections => GetPriorityOrder(CurrentDirection);
         #endregion
 
+        #region Constructor
+        protected TurnRuleMidget(char symbol, Point startPosition, ConsoleColor color) : base(symbol, startPosition, color)
+        {
+        }
+        #endregion
+
         #region Override
         protected override void PerformMove()
         {
@@ -79,13 +85,6 @@ namespace Maze.Models.Abstract
                 default:
                     return dir;
             }
-        }
-        #endregion
-
-        #region Constructor
-        protected TurnRuleMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color)
-            : base(symbol, position, endPositions, map, tileSymbols, color)
-        {
         }
         #endregion
     }

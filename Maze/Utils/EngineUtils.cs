@@ -7,14 +7,30 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Maze.Models.Abstract;
+using Maze.Models.Midgets;
 
 namespace Maze.Utils
 {
     public static class EngineUtils
     {
-
-
         #region Public
+        public static List<Midget> SetUpMidgetConfiguration(List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
+        {
+            var startPosition = GetStartPosition(map, tileSymbols[MapTile.Start]);
+            var endPositions = GetAllEndPositions(map, tileSymbols[MapTile.End], tileSymbols[MapTile.Path]);
+
+            Midget.EndPositions = endPositions;
+            Midget.Map = map;
+            Midget.TileSymbols = tileSymbols;
+
+            return new List<Midget>
+            {
+                new RightMidget('R', startPosition, ConsoleColor.Yellow),
+                new LeftMidget('L', startPosition, ConsoleColor.Green),
+                new StartrekMidget('s', startPosition, ConsoleColor.Blue),
+                new GuidedMidget('G', startPosition, ConsoleColor.DarkMagenta)
+            };
+        }
         public static List<List<char>> LoadMazeFromFile(string path)
         {
             var maze = new List<List<char>>();
@@ -26,6 +42,7 @@ namespace Maze.Utils
                 {
                     maze.Add(line.ToList());
                 }
+
                 return maze;
             }
             catch
@@ -33,19 +50,10 @@ namespace Maze.Utils
                 throw new FileLoadException("Failed while loading map");
             }
         }
-        public static List<List<char>> PlaceAllMidgets(List<Midget> midgets, List<List<char>> map)
-        {
-            var tempMap = map
-                .Select(row => row.ToList())
-                .ToList();
-            foreach (var midget in midgets)
-            {
-                var point = midget.Position;
-                tempMap[point.X][point.Y] = midget.Symbol;
-            }
-            return tempMap;
-        }
-        public static Point GetStartPosition(List<List<char>> map, char startLetter)
+        #endregion
+
+        #region Private
+        private static Point GetStartPosition(List<List<char>> map, char startLetter)
         {
             for (var i = 0; i < map.Count; i++)
             {
@@ -60,7 +68,7 @@ namespace Maze.Utils
 
             throw new Exception("Start position not found in the map");
         }
-        public static List<Point> GetAllEndPositions(List<List<char>> map, char endLetter, char pathLetter)
+        private static List<Point> GetAllEndPositions(List<List<char>> map, char endLetter, char pathLetter)
         {
             var endSquare = GetEndPosition(map, endLetter);
 
@@ -78,9 +86,6 @@ namespace Maze.Utils
                               map[pos.X][pos.Y] == pathLetter)
                 .ToList();
         }
-        #endregion
-
-        #region Private
         private static Point GetEndPosition(List<List<char>> map, char endLetter)
         {
             for (var i = 0; i < map.Count; i++)
@@ -97,11 +102,5 @@ namespace Maze.Utils
             throw new Exception("Start position not found in the map");
         }
         #endregion
-
-
-
-
-
-
     }
 }

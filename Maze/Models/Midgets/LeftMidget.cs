@@ -7,8 +7,7 @@ namespace Maze.Models.Midgets
 {
     public class LeftMidget : TurnRuleMidget
     {
-        public LeftMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color) 
-            : base(symbol, position, endPositions, map, tileSymbols, color)
+        public LeftMidget(char symbol, Point startPosition, ConsoleColor color) : base(symbol, startPosition, color)
         {
         }
 

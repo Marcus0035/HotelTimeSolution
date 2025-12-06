@@ -4,18 +4,40 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Models.Abstract;
 
 namespace Maze.Utils
 {
     public static class PrintUtils
     {
-        public static void PrintMap(List<List<char>> map)
+        public static void PrintMapWithMidgets(List<List<char>> map, List<Midget> midgets)
         {
             Console.SetCursorPosition(0, 0);
-            foreach (var line in map)
+
+            for (var x = 0; x < map.Count; x++)
             {
-                Console.WriteLine(string.Concat(line));
+                for (var y = 0; y < map[x].Count; y++)
+                {
+                    var tile = map[x][y];
+
+                    var midget = midgets.FirstOrDefault(m => m.Position.X == x && m.Position.Y == y);
+
+                    if (midget != null)
+                    {
+                        tile = midget.Symbol;
+                        Console.ForegroundColor = midget.Color;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                    Console.Write(tile);
+                }
+                Console.WriteLine();
             }
+
+            Console.ForegroundColor = ConsoleColor.White; // reset
         }
 
         public static void PrepareConsoleBeforeStart(List<List<char>> map)
