@@ -1,16 +1,10 @@
-﻿using Maze.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Maze.Core.Models.Abstract;
+using Maze.Core.Models.Midgets;
 using Maze.Core.Utils;
-using Maze.Models.Abstract;
-using Maze.Models.Midgets;
 
-namespace Maze.Utils
+namespace Maze.Core
 {
     public static class MazeConfiguration
     {

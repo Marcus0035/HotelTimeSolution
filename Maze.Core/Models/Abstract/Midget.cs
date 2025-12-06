@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Maze.Core.Utils;
-using Maze.Utils;
 
-namespace Maze.Models.Abstract
+namespace Maze.Core.Models.Abstract
 {
     public abstract class Midget
     {

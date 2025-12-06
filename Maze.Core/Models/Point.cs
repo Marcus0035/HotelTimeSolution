@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Maze.Utils
+namespace Maze.Core.Models
 {
     public struct Point : IEquatable<Point>
     {

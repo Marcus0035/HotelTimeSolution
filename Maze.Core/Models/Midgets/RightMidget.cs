@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Maze.Models.Abstract;
-using Maze.Utils;
+using Maze.Core.Models.Abstract;
+using Maze.Core.Utils;
 
-namespace Maze.Models.Midgets
+namespace Maze.Core.Models.Midgets
 {
     public class RightMidget : TurnRuleMidget
     {

@@ -1,10 +1,8 @@
-﻿using Maze.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Maze.Core.Models;
 
 namespace Maze.Core.Utils
 {
@@ -13,10 +11,9 @@ namespace Maze.Core.Utils
         #region Properties
 
         public static List<List<char>> Map { get; set; }
-        public static Point StartPosition { get; set; }
         public static List<Point> EndPositions { get; set; }
 
-        public static Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
+        public static readonly Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
         {
             { MapTile.Start, 'S' },
             { MapTile.End, 'F' },

@@ -1,8 +1,8 @@
-﻿using Maze.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Maze.Core;
 using Maze.Core.Utils;
 
 namespace Maze
@@ -40,7 +40,6 @@ namespace Maze
                     var path = GetFilePath("Please enter the path:");
 
                     MazeConfiguration.SetUpConfiguration(path);
-
                     var midgets = MazeConfiguration.GetMidgets();
 
                     PrintUtils.PrepareConsoleBeforeStart();
@@ -49,11 +48,18 @@ namespace Maze
                     {
                         Task.Delay(Delay).Wait();
 
-                        foreach (var midget in midgets.Where(x => !x.HasReachedEnd)) 
+                        foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
                             midget.Move();
 
                         PrintUtils.PrintMapWithMidgets(midgets);
                     }
+
+
+                    PrintUtils.PrintMapWithMidgets(midgets);
+
+                    PrintUtils.PrepareConsoleBeforeStart();
+
+
 
                     PrintUtils.PrepareConsoleAfterEnd();
 

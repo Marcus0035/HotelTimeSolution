@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Maze.Core.Models.Abstract;
 using Maze.Core.Utils;
-using Maze.Models.Abstract;
 
-namespace Maze.Utils
+namespace Maze
 {
     public static class PrintUtils
     {
