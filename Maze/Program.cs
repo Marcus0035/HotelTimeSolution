@@ -11,9 +11,14 @@ namespace Maze
     internal class Program
     {
         #region Const
-        private const char StartLetter = 'S';
-        private const char EndLetter = 'F';
-        private const char PathLetter = ' ';
+
+        private static Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
+        {
+            { MapTile.Start, 'S' },
+            { MapTile.End, 'F' },
+            { MapTile.Path, ' '},
+            { MapTile.Wall, '#' }
+        };
         #endregion
         static void Main(string[] args)
         {
@@ -47,16 +52,21 @@ namespace Maze
 
                     var map = EngineUtils.LoadMazeFromFile(path);
 
-                    var startPosition = EngineUtils.GetStartPosition(map, StartLetter);
-                    var endPositions = EngineUtils.GetAllEndPositions(map, EndLetter, PathLetter);
+
+                    var startSymbol = TileSymbols[MapTile.Start];
+                    var endSymbol = TileSymbols[MapTile.End];
+                    var pathSymbol = TileSymbols[MapTile.Path];
+
+                    var startPosition = EngineUtils.GetStartPosition(map, startSymbol);
+                    var endPositions = EngineUtils.GetAllEndPositions(map, endSymbol, pathSymbol);
 
                     PrintUtils.PrepareConsoleForMaze(map);
 
                     var midgets = new List<MidgetBase>
                     {
-                        new RightMidget('R', startPosition, endPositions),
-                        new LeftMidget('L', startPosition, endPositions),
-                        new StartrekMidget('s', startPosition, endPositions)
+                        new RightMidget('R', startPosition, endPositions, TileSymbols),
+                        new LeftMidget('L', startPosition, endPositions, TileSymbols),
+                        new StartrekMidget('s', startPosition, endPositions, TileSymbols)
                     };
 
                     while (!midgets.TrueForAll(x => endPositions.Contains(x.Position)))

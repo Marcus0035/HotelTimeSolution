@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Maze.Interfaces;
+using Maze.Utils;
 
 namespace Maze.Models
 {
@@ -14,13 +15,12 @@ namespace Maze.Models
         #endregion
 
         #region Constructor
-        public StartrekMidget(char symbol, Point position, List<Point> endPositions) 
-            : base(symbol, position, endPositions)
+        
+        public StartrekMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols) 
+            : base(symbol, position, endPositions, tileSymbols)
         {
         }
-        #endregion
 
-        #region Properties
         private DateTime _executeTime { get; set; }
         #endregion
 

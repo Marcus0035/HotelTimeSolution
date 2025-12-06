@@ -13,4 +13,12 @@ namespace Maze.Utils
         Left, 
         Right
     }
+
+    public enum MapTile : byte
+    {
+        Wall,
+        Path,
+        Start,
+        End,
+    }
 }

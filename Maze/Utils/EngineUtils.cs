@@ -12,7 +12,7 @@ namespace Maze.Utils
 {
     public static class EngineUtils
     {
-        
+
 
         #region Public
         public static List<List<char>> LoadMazeFromFile(string path)
@@ -32,6 +32,18 @@ namespace Maze.Utils
             {
                 throw new FileLoadException("Failed while loading map");
             }
+        }
+        public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
+        {
+            var tempMap = map
+                .Select(row => row.ToList())
+                .ToList();
+            foreach (var midget in midgets)
+            {
+                var point = midget.Position;
+                tempMap[point.X][point.Y] = midget.Symbol;
+            }
+            return tempMap;
         }
         public static Point GetStartPosition(List<List<char>> map, char startLetter)
         {
@@ -66,19 +78,6 @@ namespace Maze.Utils
                               map[pos.X][pos.Y] == pathLetter)
                 .ToList();
         }
-        public static List<List<char>> PlaceAllMidgets(List<MidgetBase> midgets, List<List<char>> map)
-        {
-            var tempMap = map
-                .Select(row => row.ToList())
-                .ToList();
-            foreach (var midget in midgets)
-            {
-                var point = midget.Position;
-                tempMap[point.X][point.Y] = midget.Symbol;
-            }
-            return tempMap;
-        }
-
         #endregion
 
         #region Private

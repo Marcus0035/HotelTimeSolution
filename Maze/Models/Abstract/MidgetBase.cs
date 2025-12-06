@@ -13,16 +13,18 @@ namespace Maze.Interfaces
         #region Properties
         public char Symbol { get; }
         public Point Position { get; set; }
-        protected List<Point> EndPositions { get; set; }
+        protected List<Point> EndPositions { get; }
         public bool IsInFinish { get; set; }
+        private Dictionary<MapTile, char> TileSymbols { get; }
         #endregion
 
         #region Constructor
-        protected MidgetBase(char symbol, Point position, List<Point> endPositions)
+        protected MidgetBase(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols)
         {
             Symbol = symbol;
             Position = position;
             EndPositions = endPositions;
+            TileSymbols = tileSymbols;
         }
         #endregion
 
@@ -64,24 +66,25 @@ namespace Maze.Interfaces
         {
             var row = Position.X;
             var col = Position.Y;
+            var pathSymbol = TileSymbols[MapTile.Path];
 
             switch (direction)
             {
                 case Direction.Up:
                     if (!IsInsideMap(row - 1, col, map)) return false;
-                    return map[row - 1][col] == ' ';
+                    return map[row - 1][col] == pathSymbol;
 
                 case Direction.Down:
                     if (!IsInsideMap(row + 1, col, map)) return false;
-                    return map[row + 1][col] == ' ';
+                    return map[row + 1][col] == pathSymbol;
 
                 case Direction.Left:
                     if (!IsInsideMap(row, col - 1, map)) return false;
-                    return map[row][col - 1] == ' ';
+                    return map[row][col - 1] == pathSymbol;
 
                 case Direction.Right:
                     if (!IsInsideMap(row, col + 1, map)) return false;
-                    return map[row][col + 1] == ' ';
+                    return map[row][col + 1] == pathSymbol;
 
                 default:
                     return false;

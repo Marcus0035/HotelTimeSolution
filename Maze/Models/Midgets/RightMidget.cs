@@ -11,7 +11,8 @@ namespace Maze.Models
 {
     public class RightMidget : OneDirectionMidget
     {
-        public RightMidget(char symbol, Point position, List<Point> endPositions) : base(symbol, position, endPositions)
+        public RightMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols) 
+            : base(symbol, position, endPositions, tileSymbols)
         {
         }
 

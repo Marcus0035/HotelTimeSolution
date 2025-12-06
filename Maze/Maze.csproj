@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Models\Abstract\MidgetBase.cs" />
     <Compile Include="Models\Abstract\OneDirectionMidget.cs" />
+    <Compile Include="Models\Midgets\GuidedMidget.cs" />
     <Compile Include="Models\Midgets\LeftMidget.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Midgets\RightMidget.cs" />

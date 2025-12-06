@@ -12,9 +12,6 @@ namespace Maze.BaseClasses
     public abstract class OneDirectionMidget : MidgetBase
     {
         #region Properties
-
-       
-
         public Direction CurrentDirection { get; set; }
         private IEnumerable<Direction> priorityDirections => GetPriorityOrder(CurrentDirection);
         #endregion
@@ -112,7 +109,9 @@ namespace Maze.BaseClasses
         #endregion
 
         #region Constructor
-        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions) : base(symbol, position, endPositions) { }
+        protected OneDirectionMidget(char symbol, Point position, List<Point> endPositions, Dictionary<MapTile, char> tileSymbols)
+            : base(symbol, position, endPositions, tileSymbols)
+        { }
         #endregion
     }
 }
