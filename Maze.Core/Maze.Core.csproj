@@ -4,18 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3AA1940A-06AD-439C-B9D9-82EA8FC19D88}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Maze</RootNamespace>
-    <AssemblyName>Maze</AssemblyName>
+    <ProjectGuid>{6A0D2CD2-4A5B-4F6F-B6D1-587D38704614}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Maze.Core</RootNamespace>
+    <AssemblyName>Maze.Core</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -44,19 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="MazeEngine.cs" />
+    <Compile Include="Models\Abstract\Midget.cs" />
+    <Compile Include="Models\Abstract\TurnRuleMidget.cs" />
+    <Compile Include="Models\Midgets\GuidedMidget.cs" />
+    <Compile Include="Models\Midgets\LeftMidget.cs" />
+    <Compile Include="Models\Midgets\RightMidget.cs" />
+    <Compile Include="Models\Midgets\StartrekMidget.cs" />
+    <Compile Include="Models\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PrintUtils.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Maze.Core\Maze.Core.csproj">
-      <Project>{6a0d2cd2-4a5b-4f6f-b6d1-587d38704614}</Project>
-      <Name>Maze.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

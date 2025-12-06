@@ -1,26 +1,14 @@
-﻿using Maze.Models;
-using Maze.Utils;
+﻿using Maze.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Maze.Models.Abstract;
-using Maze.Models.Midgets;
 
 namespace Maze
 {
     internal class Program
     {
         // Configuration
-        private static readonly Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
-        {
-            { MapTile.Start, 'S' },
-            { MapTile.End, 'F' },
-            { MapTile.Path, ' '},
-            { MapTile.Wall, '#' }
-        };
-
         private const int Delay = 50;
 
         static void Main(string[] args)
@@ -49,8 +37,8 @@ namespace Maze
                 while (true)
                 {
                     var path = GetFilePath("Please enter the path:");
-                    var map = EngineUtils.LoadMazeFromFile(path);
-                    var midgets = EngineUtils.SetUpMidgetConfiguration(map, TileSymbols);
+                    var map = MazeEngine.LoadMazeFromFile(path);
+                    var midgets = MazeEngine.SetUpMidgetConfiguration(map, MazeEngine.TileSymbols);
 
                     PrintUtils.PrepareConsoleBeforeStart(map);
 

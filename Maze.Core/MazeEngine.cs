@@ -11,7 +11,7 @@ using Maze.Models.Midgets;
 
 namespace Maze.Utils
 {
-    public static class EngineUtils
+    public static class MazeEngine
     {
         #region Public
         public static List<Midget> SetUpMidgetConfiguration(List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
@@ -50,6 +50,13 @@ namespace Maze.Utils
                 throw new FileLoadException("Failed while loading map");
             }
         }
+        public static readonly Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
+        {
+            { MapTile.Start, 'S' },
+            { MapTile.End, 'F' },
+            { MapTile.Path, ' '},
+            { MapTile.Wall, '#' }
+        };
         #endregion
 
         #region Private
