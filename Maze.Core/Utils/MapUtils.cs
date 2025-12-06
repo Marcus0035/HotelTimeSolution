@@ -8,6 +8,7 @@ namespace Maze.Core.Utils
 {
     public static class MapUtils
     {
+        #region Public
         public static List<List<char>> LoadMapFromFile(string path)
         {
             var maze = new List<List<char>>();
@@ -47,7 +48,9 @@ namespace Maze.Core.Utils
                 map[p.X][p.Y] == tiles[MapTile.Path]
             ).ToList();
         }
+        #endregion
 
+        #region Private
         private static Point GetEndPosition(List<List<char>> map, char endSymbol)
         {
             for (var i = 0; i < map.Count; i++)
@@ -57,6 +60,7 @@ namespace Maze.Core.Utils
 
             throw new Exception("End symbol not found");
         }
+        #endregion
     }
 
 

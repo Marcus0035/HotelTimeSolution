@@ -47,8 +47,6 @@ namespace Maze
 
                     while (!midgets.TrueForAll(x => x.HasReachedEnd))
                     {
-                        Task.Delay(Delay).Wait();
-
                         foreach (var midget in midgets.Where(x => !x.HasReachedEnd))
                             midget.Move();
 

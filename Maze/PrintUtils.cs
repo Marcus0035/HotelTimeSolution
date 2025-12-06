@@ -35,7 +35,8 @@ namespace Maze
                 Console.WriteLine();
             }
 
-            Console.ForegroundColor = ConsoleColor.White; // reset
+            // reset
+            Console.ForegroundColor = ConsoleColor.White; 
         }
         public static void PrepareConsoleBeforeStart(List<List<char>> map)
         {
