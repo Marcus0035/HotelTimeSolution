@@ -22,14 +22,14 @@ namespace Maze.BaseClasses
         #region Override
         public override void PerformMove()
         {
-            var possible = PossibleNextMoves();
+            var possible = PossibleNextDirections(Position);
 
             foreach (var dir in priorityDirections)
             {
                 if (!possible.Contains(dir)) continue;
 
                 CurrentDirection = dir;
-                MoveToDirection(dir);
+                Position = PointAfterMove(Position, dir);
                 return;
             }
         }
@@ -91,24 +91,7 @@ namespace Maze.BaseClasses
         #endregion
 
         #region Private
-        private void MoveToDirection(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    Position = new Point(Position.X - 1, Position.Y);
-                    break;
-                case Direction.Down:
-                    Position = new Point(Position.X + 1, Position.Y);
-                    break;
-                case Direction.Left:
-                    Position = new Point(Position.X, Position.Y - 1);
-                    break;
-                case Direction.Right:
-                    Position = new Point(Position.X, Position.Y + 1);
-                    break;
-            }
-        }
+      
         
         #endregion
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Maze.Models.Midgets;
 
 namespace Maze
 {
@@ -66,7 +67,8 @@ namespace Maze
                     {
                         new RightMidget('R', startPosition, endPositions, map, TileSymbols),
                         new LeftMidget('L', startPosition, endPositions, map, TileSymbols),
-                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols)
+                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols),
+                        new GuidedMidget('G', startPosition, endPositions, map, TileSymbols)
                     };
 
                     while (!midgets.TrueForAll(x => x.IsInFinish))

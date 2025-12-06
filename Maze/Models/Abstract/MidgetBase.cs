@@ -16,7 +16,7 @@ namespace Maze.Interfaces
         public bool IsInFinish { get; private set; }
         protected List<List<char>> Map { get; }
         protected List<Point> EndPositions { get; }
-        private Dictionary<MapTile, char> TileSymbols { get; }
+        protected Dictionary<MapTile, char> TileSymbols { get; }
         #endregion
 
         #region Constructor
@@ -48,56 +48,73 @@ namespace Maze.Interfaces
         #endregion
 
         #region Protected
-        protected List<Direction> PossibleNextMoves()
+        protected List<Direction> PossibleNextDirections(Point point)
         {
             var possibleMoves = new List<Direction>();
 
             foreach (Direction direction in Enum.GetValues(typeof(Direction)))
             {
-                if (CanMoveToDirection(direction))
+                if (CanMoveToDirection(point, direction))
                     possibleMoves.Add(direction);
             }
 
             return possibleMoves;
         }
+        protected Point PointAfterMove(Point point, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return new Point(point.X - 1, point.Y);
+                case Direction.Down:
+                    return new Point(point.X + 1, point.Y);
+                case Direction.Left:
+                    return new Point(point.X, point.Y - 1);
+                case Direction.Right:
+                    return new Point(point.X, point.Y + 1);
+                default:
+                    return point;
+            }
+        }
+
         #endregion
 
         #region Private
         private bool HasReachedFinish() => EndPositions.Contains(Position);
-        private bool CanMoveToDirection(Direction direction)
+        private bool CanMoveToDirection(Point point, Direction direction)
         {
-            var row = Position.X;
-            var col = Position.Y;
+            var row = point.X;
+            var col = point.Y;
             var pathSymbol = TileSymbols[MapTile.Path];
 
             switch (direction)
             {
                 case Direction.Up:
-                    if (!IsInsideMap(row - 1, col)) return false;
+                    if (!IsInsideMap(new Point(point.X - 1, point.Y))) return false;
                     return Map[row - 1][col] == pathSymbol;
 
                 case Direction.Down:
-                    if (!IsInsideMap(row + 1, col)) return false;
+                    if (!IsInsideMap(new Point(point.X + 1, point.Y))) return false;
                     return Map[row + 1][col] == pathSymbol;
 
                 case Direction.Left:
-                    if (!IsInsideMap(row, col - 1)) return false;
+                    if (!IsInsideMap(new Point(point.X, point.Y - 1))) return false;
                     return Map[row][col - 1] == pathSymbol;
 
                 case Direction.Right:
-                    if (!IsInsideMap(row, col + 1)) return false;
+                    if (!IsInsideMap(new Point(point.X, point.Y + 1))) return false;
                     return Map[row][col + 1] == pathSymbol;
 
                 default:
                     return false;
             }
         }
-        private bool IsInsideMap(int row, int col)
+        protected bool IsInsideMap(Point point)
         {
-            return row >= 0 &&
-                   row < Map.Count &&
-                   col >= 0 &&
-                   col < Map[row].Count;
+            return point.X >= 0 &&
+                   point.X < Map.Count &&
+                   point.Y >= 0 &&
+                   point.Y < Map[point.X].Count;
         }
         #endregion
     }
