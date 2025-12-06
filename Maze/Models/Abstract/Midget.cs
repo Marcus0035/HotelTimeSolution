@@ -10,19 +10,21 @@ namespace Maze.Models.Abstract
         public char Symbol { get; }
         public Point Position { get; protected set; }
         public bool HasReachedEnd { get; private set; }
+        public ConsoleColor Color { get; }
         protected List<Point> EndPositions { get; }
         private List<List<char>> Map { get; }
         private Dictionary<MapTile, char> TileSymbols { get; }
         #endregion
 
         #region Constructor
-        protected Midget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
+        protected Midget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color)
         {
             Symbol = symbol;
             Position = position;
             EndPositions = endPositions;
             Map = map;
             TileSymbols = tileSymbols;
+            Color = color;
         }
         #endregion
 

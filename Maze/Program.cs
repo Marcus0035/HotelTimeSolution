@@ -62,10 +62,10 @@ namespace Maze
 
                     var midgets = new List<Midget>
                     {
-                        new RightMidget('R', startPosition, endPositions, map, TileSymbols),
-                        new LeftMidget('L', startPosition, endPositions, map, TileSymbols),
-                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols),
-                        new GuidedMidget('G', startPosition, endPositions, map, TileSymbols)
+                        new RightMidget('R', startPosition, endPositions, map, TileSymbols, ConsoleColor.Yellow),
+                        new LeftMidget('L', startPosition, endPositions, map, TileSymbols, ConsoleColor.Green),
+                        new StartrekMidget('s', startPosition, endPositions, map, TileSymbols, ConsoleColor.Blue),
+                        new GuidedMidget('G', startPosition, endPositions, map, TileSymbols, ConsoleColor.DarkMagenta)
                     };
 
                     PrintUtils.PrepareConsoleBeforeStart(map);

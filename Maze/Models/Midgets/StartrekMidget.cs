@@ -19,8 +19,8 @@ namespace Maze.Models.Midgets
         #endregion
 
         #region Constructor
-        public StartrekMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols) 
-            : base(symbol, position, endPositions, map, tileSymbols)
+        public StartrekMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color) 
+            : base(symbol, position, endPositions, map, tileSymbols, color)
         {
         }
         #endregion

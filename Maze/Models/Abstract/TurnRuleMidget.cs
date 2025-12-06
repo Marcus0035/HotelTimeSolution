@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Maze.Utils;
 
 namespace Maze.Models.Abstract
@@ -82,8 +83,8 @@ namespace Maze.Models.Abstract
         #endregion
 
         #region Constructor
-        protected TurnRuleMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols)
-            : base(symbol, position, endPositions, map, tileSymbols)
+        protected TurnRuleMidget(char symbol, Point position, List<Point> endPositions, List<List<char>> map, Dictionary<MapTile, char> tileSymbols, ConsoleColor color)
+            : base(symbol, position, endPositions, map, tileSymbols, color)
         {
         }
         #endregion
