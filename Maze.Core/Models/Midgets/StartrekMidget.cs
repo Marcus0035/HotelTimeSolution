@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Maze.Core.Utils;
 using Maze.Models.Abstract;
 using Maze.Utils;
 
@@ -44,7 +45,7 @@ namespace Maze.Models.Midgets
 
             if (_executeTime > DateTime.Now) return;
 
-            Position = EndPositions.First();
+            Position = MapUtils.EndPositions.First();
         }
         #endregion
     }

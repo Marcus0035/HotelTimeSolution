@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Maze.Core.Utils;
 using Maze.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace Maze.Models.Abstract
 {
@@ -19,14 +20,14 @@ namespace Maze.Models.Abstract
         #region Override
         protected override void PerformMove()
         {
-            var possible = PossibleNextDirections(Position);
+            var possible = MoveUtils.PossibleNextDirections(Position);
 
             foreach (var dir in PriorityDirections)
             {
                 if (!possible.Contains(dir)) continue;
 
                 CurrentDirection = dir;
-                Position = PointAfterMove(Position, dir);
+                Position = MoveUtils.PointAfterMove(Position, dir);
                 return;
             }
         }

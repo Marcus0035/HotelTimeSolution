@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Core.Utils;
 using Maze.Models.Abstract;
 using Maze.Utils;
 
@@ -23,7 +24,7 @@ namespace Maze.Models.Midgets
         protected override void PerformMove()
         {
             if (_bestRoute == null || _bestRoute.Count == 0)
-                _bestRoute = FindPathBFS(Position, EndPositions[0]);
+                _bestRoute = FindPathBFS(Position, MapUtils.EndPositions[0]);
 
             Position = _bestRoute[_bestRoute.IndexOf(Position) + 1];
         }
@@ -43,12 +44,12 @@ namespace Maze.Models.Midgets
             {
                 var current = queue.Dequeue();
 
-                if (EndPositions.Contains(current))
+                if (MapUtils.EndPositions.Contains(current))
                 {
                     return ReconstructPath(parent, start, end);
                 }
 
-                foreach (var neighbour in GetAllPossibleNextPositions(current))
+                foreach (var neighbour in MoveUtils.GetAllPossibleNextPositions(current))
                 {
                     if (!visited.Add(neighbour))
                         continue;
@@ -76,11 +77,7 @@ namespace Maze.Models.Midgets
 
             return path;
         }
-        private List<Point> GetAllPossibleNextPositions(Point point)
-        {
-            var nextDirections = PossibleNextDirections(point);
-            return nextDirections.Select(x => PointAfterMove(point, x)).ToList();
-        }
+        
         #endregion
     }
 }

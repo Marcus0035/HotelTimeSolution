@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Maze.Core.Utils;
 
 namespace Maze
 {
@@ -37,10 +38,12 @@ namespace Maze
                 while (true)
                 {
                     var path = GetFilePath("Please enter the path:");
-                    var map = MazeEngine.LoadMazeFromFile(path);
-                    var midgets = MazeEngine.SetUpMidgetConfiguration(map, MazeEngine.TileSymbols);
 
-                    PrintUtils.PrepareConsoleBeforeStart(map);
+                    MazeConfiguration.SetUpConfiguration(path);
+
+                    var midgets = MazeConfiguration.GetMidgets();
+
+                    PrintUtils.PrepareConsoleBeforeStart();
 
                     while (!midgets.TrueForAll(x => x.HasReachedEnd))
                     {
@@ -49,7 +52,7 @@ namespace Maze
                         foreach (var midget in midgets.Where(x => !x.HasReachedEnd)) 
                             midget.Move();
 
-                        PrintUtils.PrintMapWithMidgets(map, midgets);
+                        PrintUtils.PrintMapWithMidgets(midgets);
                     }
 
                     PrintUtils.PrepareConsoleAfterEnd();

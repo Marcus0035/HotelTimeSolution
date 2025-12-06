@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
-    <Compile Include="MazeEngine.cs" />
+    <Compile Include="Utils\Enums.cs" />
+    <Compile Include="MazeConfiguration.cs" />
     <Compile Include="Models\Abstract\Midget.cs" />
     <Compile Include="Models\Abstract\TurnRuleMidget.cs" />
     <Compile Include="Models\Midgets\GuidedMidget.cs" />
@@ -51,6 +51,9 @@
     <Compile Include="Models\Midgets\StartrekMidget.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\MapUtils.cs" />
+    <Compile Include="Utils\MoveUtils.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
