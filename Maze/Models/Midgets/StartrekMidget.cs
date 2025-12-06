@@ -18,10 +18,17 @@ namespace Maze.Models.Midgets
         private DateTime _executeTime { get; set; }
         #endregion
 
-        #region Constructor
-        public StartrekMidget(char symbol, Point startPosition, ConsoleColor color) : base(symbol, startPosition, color)
+        #region Static
+        private static int GenerateRandomDelay()
         {
+            var random = new Random();
+            return random.Next(TeleportDelayMin, TeleportDelayMax);
         }
+        #endregion
+
+        #region Constructor
+        public StartrekMidget(char symbol, Point startPosition, ConsoleColor color) 
+            : base(symbol, startPosition, color) { }
         #endregion
 
         #region Override
@@ -38,14 +45,6 @@ namespace Maze.Models.Midgets
             if (_executeTime > DateTime.Now) return;
 
             Position = EndPositions.First();
-        }
-        #endregion
-
-        #region Private
-        private int GenerateRandomDelay()
-        {
-            var random = new Random();
-            return random.Next(TeleportDelayMin, TeleportDelayMax);
         }
         #endregion
     }

@@ -13,7 +13,7 @@ namespace Maze
     internal class Program
     {
         // Configuration
-        private static Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
+        private static readonly Dictionary<MapTile, char> TileSymbols = new Dictionary<MapTile, char>
         {
             { MapTile.Start, 'S' },
             { MapTile.End, 'F' },
@@ -21,8 +21,7 @@ namespace Maze
             { MapTile.Wall, '#' }
         };
 
-        private static int Delay = 50;
-
+        private const int Delay = 50;
 
         static void Main(string[] args)
         {
@@ -50,9 +49,7 @@ namespace Maze
                 while (true)
                 {
                     var path = GetFilePath("Please enter the path:");
-
                     var map = EngineUtils.LoadMazeFromFile(path);
-                    
                     var midgets = EngineUtils.SetUpMidgetConfiguration(map, TileSymbols);
 
                     PrintUtils.PrepareConsoleBeforeStart(map);

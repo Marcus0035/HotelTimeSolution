@@ -14,26 +14,12 @@ namespace Maze.Models.Abstract
         #endregion
 
         #region Static
+        // Properties
         public static List<Point> EndPositions { get; set; }
         public static List<List<char>> Map { get; set; }
         public static Dictionary<MapTile, char> TileSymbols { get; set; }
-        #endregion
 
-        #region Constructor
-
-        protected Midget(char symbol, Point startPosition, ConsoleColor color)
-        {
-            Symbol = symbol;
-            Position = startPosition;
-            Color = color;
-        }
-        #endregion
-
-        #region Abstract
-        protected abstract void PerformMove();
-        #endregion
-
-        #region Static
+        // Methods
         protected static Point PointAfterMove(Point point, Direction direction)
         {
             switch (direction)
@@ -50,6 +36,26 @@ namespace Maze.Models.Abstract
                     return point;
             }
         }
+        private static bool IsInsideMap(Point point)
+        {
+            return point.X >= 0 &&
+                   point.X < Map.Count &&
+                   point.Y >= 0 &&
+                   point.Y < Map[point.X].Count;
+        }
+        #endregion
+
+        #region Constructor
+        protected Midget(char symbol, Point startPosition, ConsoleColor color)
+        {
+            Symbol = symbol;
+            Position = startPosition;
+            Color = color;
+        }
+        #endregion
+
+        #region Abstract
+        protected abstract void PerformMove();
         #endregion
 
         #region Public
@@ -107,13 +113,6 @@ namespace Maze.Models.Abstract
                 default:
                     return false;
             }
-        }
-        private bool IsInsideMap(Point point)
-        {
-            return point.X >= 0 &&
-                   point.X < Map.Count &&
-                   point.Y >= 0 &&
-                   point.Y < Map[point.X].Count;
         }
         #endregion
     }

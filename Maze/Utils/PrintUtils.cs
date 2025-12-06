@@ -39,14 +39,12 @@ namespace Maze.Utils
 
             Console.ForegroundColor = ConsoleColor.White; // reset
         }
-
         public static void PrepareConsoleBeforeStart(List<List<char>> map)
         {
             Console.CursorVisible = false;
             Console.SetWindowSize(map.Count, map.Max(x => x.Count));
             Console.Clear();
         }
-
         public static void PrepareConsoleAfterEnd()
         {
             Console.CursorVisible = true;

@@ -20,7 +20,6 @@ namespace Maze.Models.Midgets
         #endregion
 
         #region Override
-
         protected override void PerformMove()
         {
             if (_bestRoute == null || _bestRoute.Count == 0)
@@ -74,6 +73,7 @@ namespace Maze.Models.Midgets
 
             path.Add(start);
             path.Reverse();
+
             return path;
         }
         private List<Point> GetAllPossibleNextPositions(Point point)

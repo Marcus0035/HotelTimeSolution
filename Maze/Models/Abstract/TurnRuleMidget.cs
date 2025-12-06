@@ -12,9 +12,8 @@ namespace Maze.Models.Abstract
         #endregion
 
         #region Constructor
-        protected TurnRuleMidget(char symbol, Point startPosition, ConsoleColor color) : base(symbol, startPosition, color)
-        {
-        }
+        protected TurnRuleMidget(char symbol, Point startPosition, ConsoleColor color) 
+            : base(symbol, startPosition, color) { }
         #endregion
 
         #region Override
