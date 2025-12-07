@@ -31,8 +31,6 @@ namespace Fujtajbl
             // Main application method
             void RunApplication()
             {
-                var engine = new FujtajblEngine();
-
                 PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
                 PrintColoredMessage($"\nInfo:");
                 PrintColoredMessage($"For decimal numbers please use '{GetDecimalSeparator()}'", ConsoleColor.DarkCyan);
@@ -43,12 +41,12 @@ namespace Fujtajbl
                     var firstNum = GetDouble("Please enter the first number:");
                     var secondNum = GetDouble("Please enter the second number:");
 
-                    var operationsDisplayString = string.Concat(FujtajblEngine.strategies.Keys);
+                    var operationsDisplayString = string.Concat(FujtajblUtils.strategies.Keys);
                     var op = GetMathOperation($"Please enter the math operation ({operationsDisplayString}):");
 
                     try
                     {
-                        var result = engine.Calculate(firstNum, secondNum, op);
+                        var result = FujtajblUtils.Calculate(firstNum, secondNum, op);
                         PrintColoredMessage($"{firstNum} {op} {secondNum} = {result}\n", ConsoleColor.Green);
                     }
                     catch (Exception e)
@@ -74,7 +72,7 @@ namespace Fujtajbl
                 while (true)
                 {
                     var input = GetCharAnswer(prompt);
-                    if (FujtajblEngine.strategies.Keys.Contains(input))
+                    if (FujtajblUtils.strategies.Keys.Contains(input))
                         return input;
 
                     PrintColoredMessage("Please enter a valid character.\n", ConsoleColor.Red);

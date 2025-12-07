@@ -1,57 +1,69 @@
 ﻿using Fujtajbl;
-using Fujtajbl.Interfaces;
-using Fujtajbl.Models;
+using Xunit;
 
 namespace UnitTests
 {
     public class FujtajblTests
     {
-        private FujtajblEngine engine = new();
-
-        [Fact]
-        public void Calculate_Addition_ReturnsCorrectValue()
+        [Theory]
+        [InlineData(1, 5, 6)]
+        [InlineData(10, 20, 30)]
+        [InlineData(-5, 5, 0)]
+        [InlineData(3.5, 4.5, 8.0)]
+        public void Calculate_Addition_ReturnsCorrectValue(double x, double y, double expected)
         {
-            var result = engine.Calculate(5, 3, '+');
-            Assert.Equal(8, result);
+            var result = FujtajblUtils.Calculate(x, y, '+');
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void Calculate_Subtraction_ReturnsCorrectValue()
+        [Theory]
+        [InlineData(10, 4, 6)]
+        [InlineData(5, 10, -5)]
+        [InlineData(0, 0, 0)]
+        [InlineData(3.5, 1.2, 2.3)]
+        public void Calculate_Subtraction_ReturnsCorrectValue(double x, double y, double expected)
         {
-            var result = engine.Calculate(10, 4, '-');
-            Assert.Equal(6, result);
+            var result = FujtajblUtils.Calculate(x, y, '-');
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void Calculate_Multiplication_ReturnsCorrectValue()
+        [Theory]
+        [InlineData(6, 7, 42)]
+        [InlineData(10, 0, 0)]
+        [InlineData(-3, 3, -9)]
+        [InlineData(1.5, 2, 3)]
+        public void Calculate_Multiplication_ReturnsCorrectValue(double x, double y, double expected)
         {
-            var result = engine.Calculate(6, 7, '*');
-            Assert.Equal(42, result);
+            var result = FujtajblUtils.Calculate(x, y, '*');
+            Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void Calculate_Division_ReturnsCorrectValue()
+        [Theory]
+        [InlineData(20, 4, 5)]
+        [InlineData(9, 3, 3)]
+        [InlineData(-10, 2, -5)]
+        public void Calculate_Division_ReturnsCorrectValue(double x, double y, double expected)
         {
-            var result = engine.Calculate(20, 4, '/');
-            Assert.Equal(5, result);
+            var result = FujtajblUtils.Calculate(x, y, '/');
+            Assert.Equal(expected, result);
         }
 
         [Fact]
         public void Calculate_DivisionByZero_ThrowsException()
         {
-            Assert.Throws<DivideByZeroException>(() => engine.Calculate(10, 0, '/'));
+            Assert.Throws<DivideByZeroException>(() => FujtajblUtils.Calculate(10, 0, '/'));
         }
 
         [Fact]
         public void Calculate_UnknownOperation_ThrowsException()
         {
-            Assert.Throws<InvalidOperationException>(() => engine.Calculate(5, 5, '^'));
+            Assert.Throws<InvalidOperationException>(() => FujtajblUtils.Calculate(5, 5, '^'));
         }
 
         [Fact]
         public void Calculate_Overflow_ThrowsException()
         {
-            Assert.Throws<OverflowException>(() => engine.Calculate(double.MaxValue, 2, '*'));
+            Assert.Throws<OverflowException>(() => FujtajblUtils.Calculate(double.MaxValue, 2, '*'));
         }
     }
 }

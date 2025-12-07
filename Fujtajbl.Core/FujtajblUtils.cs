@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fujtajbl
 {
-    public class FujtajblEngine
+    public static class FujtajblUtils
     {
         public static Dictionary<char, IOperationStrategy> strategies = new Dictionary<char, IOperationStrategy>
         {
@@ -18,7 +18,7 @@ namespace Fujtajbl
             { '/', new DivideStrategy() }
         };
 
-        public double Calculate(double a, double b, char operation)
+        public static double Calculate(double a, double b, char operation)
         {
             if (!strategies.ContainsKey(operation))
                 throw new InvalidOperationException("Unknown operation.");
