@@ -17,10 +17,31 @@
   <ItemGroup>
     <ProjectReference Include="..\Fujtajbl.Core\Fujtajbl.Core.csproj" />
     <ProjectReference Include="..\IPMasking.Core\IPMasking.Core.csproj" />
+    <ProjectReference Include="..\Maze.Core\Maze.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Maze\Utils\" />
+    <Folder Include="Maze\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Maze\TestMaps\Valid.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Maze\TestMaps\NoEnd.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Maze\TestMaps\NoPossible.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Maze\TestMaps\NoStart.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
