@@ -28,5 +28,25 @@ namespace UnitTests.Maze.BaseTest
 
             return Path.Combine(projectDir, "Maze", "TestMaps", fileName);
         }
+
+        protected PathFindService CreatePathFindService(string fileName)
+        {
+            var context = CreateContext(fileName);
+            var movementService = new MovementService(context);
+            return new PathFindService(movementService);
+        }
+        protected MazeContext CreateContext(string fileName)
+        {
+            var path = GetMapPath(fileName);
+            var map = MapUtils.LoadMapFromFile(path);
+
+            var start = MapUtils.GetStartPosition(map, Tiles);
+            var ends = MapUtils.GetAllEndPositions(map, Tiles);
+
+            return new MazeContext(map, Tiles, start, ends);
+        }
+
+
+
     }
 }

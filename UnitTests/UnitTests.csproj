@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Maze\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Maze\TestMaps\ValidTwoEnds.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
