@@ -11,13 +11,18 @@ namespace Maze.Core.Utils
         #region Public
         public static List<List<char>> LoadMapFromFile(string path)
         {
-            var maze = new List<List<char>>();
+            List<string> lines;
 
-            var lines = File.ReadAllLines(path);
-            foreach (var line in lines)
-                maze.Add(line.ToList());
+            try
+            {
+                lines = File.ReadAllLines(path).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Unable to load map file from path: {path}", ex);
+            }
 
-            return maze;
+            return lines.Select(line => line.ToList()).ToList();
         }
 
         public static Point GetStartPosition(List<List<char>> map, Dictionary<MapTile, char> tiles)
@@ -32,7 +37,7 @@ namespace Maze.Core.Utils
 
         public static List<Point> GetAllEndPositions(List<List<char>> map, Dictionary<MapTile, char> tiles)
         {
-            var end = GetEndPosition(map, tiles[MapTile.End]);
+            var end = GetEndPoint(map, tiles[MapTile.End]);
 
             var candidates = new List<Point>
             {
@@ -43,15 +48,15 @@ namespace Maze.Core.Utils
             };
 
             return candidates.Where(p =>
-                p.Column >= 0 && p.Column < map.Count &&
-                p.Row >= 0 && p.Row < map[p.Column].Count &&
-                map[p.Column][p.Row] == tiles[MapTile.Path]
+                p.Row >= 0 && p.Row < map.Count &&
+                p.Column >= 0 && p.Column < map[p.Row].Count &&
+                map[p.Row][p.Column] == tiles[MapTile.Path]
             ).ToList();
         }
         #endregion
 
         #region Private
-        private static Point GetEndPosition(List<List<char>> map, char endSymbol)
+        private static Point GetEndPoint(List<List<char>> map, char endSymbol)
         {
             for (var i = 0; i < map.Count; i++)
                 for (var j = 0; j < map[i].Count; j++)

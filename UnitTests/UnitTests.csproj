@@ -25,12 +25,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Maze\Utils\" />
     <Folder Include="Maze\Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Maze\TestMaps\Valid.dat">
+    <None Update="Maze\TestMaps\ValidTwoEnds.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Maze\TestMaps\ValidSingleEnd.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Maze\TestMaps\NoEnd.dat">

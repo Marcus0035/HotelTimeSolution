@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Maze.Core;
 using Maze.Core.Utils;
 
 namespace UnitTests.Maze.BaseTest
 {
     public class MazeBaseTests
     {
+        protected static MazeContext MazeContext;
+
         protected readonly Dictionary<MapTile, char> Tiles = new()
         {
             { MapTile.Start, 'S' },
-            { MapTile.End, 'E' },
-            { MapTile.Path, '.' },
+            { MapTile.End, 'F' },
+            { MapTile.Path, ' ' },
             { MapTile.Wall, '#' }
         };
 
