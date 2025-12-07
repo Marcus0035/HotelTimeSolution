@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IPMasking
+namespace IPMasking.Core
 {
     public enum Mask : byte
     {

@@ -1,7 +1,8 @@
 ﻿using Maze.Core;
+using Maze.Core.Services;
 using Maze.Core.Utils;
 
-namespace UnitTests.Maze.BaseTest
+namespace UnitTests.Maze.Tests
 {
     public class MazeBaseTests
     {

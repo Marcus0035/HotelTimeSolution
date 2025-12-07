@@ -1,7 +1,7 @@
-﻿using Maze.Core.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Maze.Core.Models;
 
-namespace Maze.Core.Utils
+namespace Maze.Core.Services
 {
     public class PathFindService
     {

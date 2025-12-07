@@ -1,13 +1,13 @@
 ﻿using Maze.Core.Models;
+using Maze.Core.Services;
 using Maze.Core.Utils;
-using UnitTests.Maze.BaseTest;
+using UnitTests.Maze.Tests;
 
 namespace UnitTests.Maze.Services
 {
     public class MovementServiceTests : MazeBaseTests
     {
-
-        private string FileSystemName = "ValidSingleEnd.dat";
+        private const string FileSystemName = "ValidSingleEnd.dat";
 
         [Fact]
         public void PointAfterMove_Up_WorksCorrectly()

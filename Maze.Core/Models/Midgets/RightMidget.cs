@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Maze.Core.Models.Abstract;
+using Maze.Core.Services;
 using Maze.Core.Utils;
 
 namespace Maze.Core.Models.Midgets

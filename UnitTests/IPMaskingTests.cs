@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using IPMasking;
+using IPMasking.Core;
 
-namespace IPMaskingTests
+namespace UnitTests
 {
     public class IpMaskingUtilsTests
     {

@@ -1,4 +1,4 @@
-﻿namespace Fujtajbl.Interfaces
+﻿namespace Fujtajbl.Core.Interfaces
 {
     public interface IOperationStrategy
     {

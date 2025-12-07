@@ -1,6 +1,5 @@
 ﻿using Maze.Core.Utils;
 using Maze.Core.Models;
-using UnitTests.Maze.BaseTest;
 
 namespace UnitTests.Maze.Tests
 {

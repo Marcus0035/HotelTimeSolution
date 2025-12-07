@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Utilities.Extensions
+namespace IPMasking.Extensions
 {
     public static class EnumExtensions
     {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Maze.Core.Models;
+using Maze.Core.Utils;
 
-namespace Maze.Core.Utils
+namespace Maze.Core.Services
 {
     public class MovementService
     {

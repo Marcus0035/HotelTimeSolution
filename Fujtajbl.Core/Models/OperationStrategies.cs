@@ -1,6 +1,6 @@
-﻿using Fujtajbl.Interfaces;
+﻿using Fujtajbl.Core.Interfaces;
 
-namespace Fujtajbl.Models
+namespace Fujtajbl.Core.Models
 {
     public class AddStrategy : IOperationStrategy
     {

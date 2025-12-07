@@ -1,11 +1,11 @@
-﻿using UnitTests.Maze.BaseTest;
+﻿using UnitTests.Maze.Tests;
 
 namespace UnitTests.Maze.Services
 {
     public class PathFindServiceTests: MazeBaseTests
     {
-        private string ValidFileName = "ValidSingleEnd.dat";
-        private string NoPossibleFileName = "NoPossible.dat";
+        private readonly string ValidFileName = "ValidSingleEnd.dat";
+        private readonly string NoPossibleFileName = "NoPossible.dat";
 
         [Fact]
         public void FindPathBFS_WorksCorrectly()

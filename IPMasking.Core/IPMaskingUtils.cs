@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.RegularExpressions;
 
-namespace IPMasking
+namespace IPMasking.Core
 {
     public static class IPMaskingUtils
     {

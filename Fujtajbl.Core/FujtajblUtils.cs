@@ -1,9 +1,9 @@
-﻿using Fujtajbl.Interfaces;
-using Fujtajbl.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Fujtajbl.Core.Interfaces;
+using Fujtajbl.Core.Models;
 
-namespace Fujtajbl
+namespace Fujtajbl.Core
 {
     public static class FujtajblUtils
     {
