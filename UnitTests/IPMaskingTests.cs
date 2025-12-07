@@ -1,84 +1,87 @@
-﻿using Fujtajbl;
-using Fujtajbl.Interfaces;
-using Fujtajbl.Models;
+﻿using System.Net;
+using Xunit;
 using IPMasking;
-using System.Net;
 
-namespace UnitTests
+namespace IPMaskingTests
 {
-    public class IPMaskingTests
+    public class IpMaskingUtilsTests
     {
-        private IPMaskingEngine engine = new();
-
-        [Fact]
-        public void IsInSameSubnet_ReturnsTrue_ForIPsInSameSubnet()
+        [Theory]
+        [InlineData("192.168.1.1/24")]
+        [InlineData("0.0.0.0/0")]
+        [InlineData("255.255.255.255/32")]
+        [InlineData("10.10.10.10/8")]
+        [InlineData("1.1.1.1/23")]
+        public void IsValidIPAddress_ValidFormats_ReturnsTrue(string input)
         {
-            var ip1 = IPAddress.Parse("192.168.1.10");
-            var ip2 = IPAddress.Parse("192.168.1.20");
-            var mask = IPAddress.Parse("255.255.255.0");
-
-            bool result = engine.IsInSameSubnet(ip1, ip2, mask);
-
-            Assert.True(result);
+            Assert.True(IPMaskingUtils.IsValidIPAddress(input));
         }
 
-        [Fact]
-        public void IsInSameSubnet_ReturnsFalse_ForIPsInDifferentSubnets()
+        [Theory]
+        [InlineData("256.0.0.1/24")]
+        [InlineData("192.168.1/24")]
+        [InlineData("192.168/24")]
+        [InlineData("192.168.1.1")]
+        [InlineData("1.1.1.1/33")]
+        [InlineData("-1.1.1.1/24")]
+        [InlineData("1.1.1.1/-1")]
+        public void IsValidIPAddress_InvalidFormats_ReturnsFalse(string input)
         {
-            var ip1 = IPAddress.Parse("192.168.1.10");
-            var ip2 = IPAddress.Parse("192.168.2.10");
-            var mask = IPAddress.Parse("255.255.255.0");
-
-            bool result = engine.IsInSameSubnet(ip1, ip2, mask);
-
-            Assert.False(result);
+            Assert.False(IPMaskingUtils.IsValidIPAddress(input));
         }
 
-        [Fact]
-        public void IsInSameSubnet_WorksWithDifferentMask()
+        [Theory]
+        [InlineData(24, "255.255.255.0")]
+        [InlineData(23, "255.255.254.0")]
+        [InlineData(16, "255.255.0.0")]
+        [InlineData(8, "255.0.0.0")]
+        [InlineData(32, "255.255.255.255")]
+        [InlineData(0, "0.0.0.0")]
+        public void GetMask_ValidPrefix_ReturnsCorrectMask(int prefix, string expectedMask)
         {
-            var ip1 = IPAddress.Parse("10.0.0.5");
-            var ip2 = IPAddress.Parse("10.0.1.5");
-            var mask = IPAddress.Parse("255.255.0.0");
-
-            bool result = engine.IsInSameSubnet(ip1, ip2, mask);
-
-            Assert.True(result);
+            var mask = IPMaskingUtils.GetMask(prefix);
+            Assert.Equal(IPAddress.Parse(expectedMask), mask);
         }
 
-        [Fact]
-        public void IsInSameSubnet_ReturnsFalse_WhenMaskDoesNotMatch()
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(33)]
+        public void GetMask_InvalidPrefix_ThrowsException(int prefix)
         {
-            var ip1 = IPAddress.Parse("10.0.0.5");
-            var ip2 = IPAddress.Parse("10.1.0.5");
-            var mask = IPAddress.Parse("255.255.255.0");
-
-            bool result = engine.IsInSameSubnet(ip1, ip2, mask);
-
-            Assert.False(result);
+            Assert.Throws<ArgumentOutOfRangeException>(() => IPMaskingUtils.GetMask(prefix));
         }
 
-        [Fact]
-        public void IsInSameSubnet_ThrowsException_ForDifferentIPLength()
+        [Theory]
+        [InlineData("192.168.1.10/24", "192.168.1.10")]
+        [InlineData("10.0.0.1/8", "10.0.0.1")]
+        public void SeparateIPAddress_ReturnsIPAddress(string input, string expected)
         {
-            var ip1 = IPAddress.Parse("192.168.1.10"); // IPv4
-            var ip2 = IPAddress.Parse("2001:db8::1");  // IPv6
-            var mask = IPAddress.Parse("255.255.255.0");
-
-            Assert.Throws<ArgumentException>(() => engine.IsInSameSubnet(ip1, ip2, mask));
+            var output = IPMaskingUtils.SeparateIPAddress(input);
+            Assert.Equal(IPAddress.Parse(expected), output);
         }
 
-        [Fact]
-        public void IsInSameSubnet_WorksWithIPv6()
+        [Theory]
+        [InlineData("192.168.1.10/24", 24)]
+        [InlineData("10.0.0.1/8", 8)]
+        public void SeparatePrefix_ReturnsPrefix(string input, int expectedPrefix)
         {
-            var ip1 = IPAddress.Parse("2001:db8::1");
-            var ip2 = IPAddress.Parse("2001:db8::2");
-            var mask = IPAddress.Parse("ffff:ffff:ffff:ffff::");
-
-            bool result = engine.IsInSameSubnet(ip1, ip2, mask);
-
-            Assert.True(result);
+            Assert.Equal(expectedPrefix, IPMaskingUtils.SeparatePrefix(input));
         }
 
+        [Theory]
+        [InlineData("192.168.1.10", "192.168.1.20", "255.255.255.0", true)]
+        [InlineData("192.168.1.10", "192.168.2.10", "255.255.255.0", false)]
+        [InlineData("10.0.0.1", "10.0.255.255", "255.255.0.0", true)]
+        [InlineData("10.0.0.1", "10.1.0.1", "255.255.0.0", false)]
+        public void IsInSameSubnet_ReturnsExpectedResult(string ip1, string ip2, string mask, bool expected)
+        {
+            var ipAddress1 = IPAddress.Parse(ip1);
+            var ipAddress2 = IPAddress.Parse(ip2);
+            var maskAddress = IPAddress.Parse(mask);
+
+            var result = IPMaskingUtils.IsInSameSubnet(ipAddress1, ipAddress2, maskAddress);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

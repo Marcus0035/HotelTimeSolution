@@ -1,12 +1,6 @@
 ﻿using System.Net;
 using IPMasking;
-using Utilities.Extensions;
 
-const string sameSubnetMessage = "True: IP Addresses are in the same subnet. \n";
-const string differentSubnetMessage = "False: IP Addresses aren't in the same subnet. \n";
-
-
-// Application entry point with exception handling
 try
 {
     RunApplication();
@@ -20,42 +14,50 @@ catch (Exception ex)
     PrintColoredMessage($"\nUnexpected error: {ex.Message}", ConsoleColor.Red);
 }
 
-// Main application method
 void RunApplication()
 {
-    var engine = new IPMaskingEngine();
-
     PrintColoredMessage("Welcome to IP Validator", ConsoleColor.Cyan);
-    PrintColoredMessage($"\nInfo:");
+    PrintColoredMessage("\nInfo:");
     PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
-    var baseIPAddress = GetIpAddress($"Please input base IP Address: ");
-
-    PrintMaskOptions();
-    var baseMask = GetMaskOption("Select mask by entering its number:");
+    var input = GetCIDR($"Please input base IP Address (format X.X.X.X/Y): ");
+    var baseIp = IPMaskingUtils.SeparateIPAddress(input);
+    var prefix = IPMaskingUtils.SeparatePrefix(input);
+    var mask = IPMaskingUtils.GetMask(prefix);
 
     PrintColoredMessage("\nConfiguration:", ConsoleColor.Cyan);
-    PrintColoredMessage($"IP Address:\t{baseIPAddress}", ConsoleColor.DarkCyan);
-    PrintColoredMessage($"Mask:\t\t{baseMask}", ConsoleColor.DarkCyan);
+    PrintColoredMessage($"IP Address:\t{baseIp}", ConsoleColor.DarkCyan);
+    PrintColoredMessage($"Prefix:\t\t{prefix}", ConsoleColor.DarkCyan);
+    PrintColoredMessage($"Mask:\t\t{mask}", ConsoleColor.DarkCyan);
 
-    PrintColoredMessage("\nValidation started! Enter IPs to compare with base address. \n", ConsoleColor.Cyan);
+    PrintColoredMessage("\nValidation started! Enter IPs to compare with base address.\n", ConsoleColor.Yellow);
 
     while (true)
     {
-        var newIp = GetIpAddress($"Please input IP Address to test:");
-
-        var same = engine.IsInSameSubnet(baseIPAddress, newIp, baseMask);
-
+        var testIp = GetIPAddress("Please input IP Address to test: ");
+        var same = IPMaskingUtils.IsInSameSubnet(baseIp, testIp, mask);
 
         if (same)
-            PrintColoredMessage(sameSubnetMessage, ConsoleColor.Green);
+            PrintColoredMessage("True: IP Addresses are in the same subnet.\n", ConsoleColor.Green);
         else
-            PrintColoredMessage(differentSubnetMessage, ConsoleColor.Red);
+            PrintColoredMessage("False: IP Addresses aren't in the same subnet.\n", ConsoleColor.Red);
     }
 }
 
-// Helper methods
-IPAddress GetIpAddress(string prompt)
+// Input
+string GetCIDR(string prompt)
+{
+    while (true)
+    {
+        var input = GetAnswer(prompt);
+
+        if (IPMaskingUtils.IsValidIPAddress(input))
+            return input;
+
+        PrintColoredMessage("Invalid IP address format, try again.\n", ConsoleColor.Red);
+    }
+}
+IPAddress GetIPAddress(string prompt)
 {
     while (true)
     {
@@ -66,38 +68,6 @@ IPAddress GetIpAddress(string prompt)
 
         PrintColoredMessage("Invalid IP address, try again.\n", ConsoleColor.Red);
     }
-}
-IPAddress GetMaskOption(string prompt)
-{
-    while (true)
-    {
-        var input = GetAnswer(prompt);
-
-        if (!byte.TryParse(input, out byte prefixValue))
-        {
-            PrintColoredMessage("Invalid input. Enter a number.\n", ConsoleColor.Red);
-            continue;
-        }
-
-        if (Enum.IsDefined(typeof(Mask), prefixValue))
-            return IPMaskingEngine.GetMask((Mask)prefixValue);
-
-        PrintColoredMessage("Unknown mask. Try again.\n", ConsoleColor.Red);
-    }
-}
-
-
-// Display available mask options
-void PrintMaskOptions()
-{
-    PrintColoredMessage("\nAvailable Masks:");
-
-    foreach (Mask mask in Enum.GetValues(typeof(Mask)))
-    {
-        PrintColoredMessage($"{(byte)mask}: {mask.GetDisplayName()}", ConsoleColor.Yellow);
-    }
-
-    Console.WriteLine();
 }
 string GetAnswer(string prompt)
 {
@@ -112,11 +82,11 @@ string GetAnswer(string prompt)
         if (!string.IsNullOrWhiteSpace(input))
             return input;
 
-        PrintColoredMessage("Invalid Input, try again.\n", ConsoleColor.Red);
+        PrintColoredMessage("Invalid input, try again.\n", ConsoleColor.Red);
     }
 }
 
-// Utility method
+// Print
 void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
 {
     Console.ForegroundColor = color;
