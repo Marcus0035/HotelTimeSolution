@@ -13,7 +13,7 @@ namespace UnitTests
         [InlineData("1.1.1.1/23")]
         public void IsValidIPAddress_ValidFormats_ReturnsTrue(string input)
         {
-            Assert.True(IPMaskingUtils.IsValidIPAddress(input));
+            Assert.True(IpMaskingUtils.IsValidIpAddress(input));
         }
 
         [Theory]
@@ -26,7 +26,7 @@ namespace UnitTests
         [InlineData("1.1.1.1/-1")]
         public void IsValidIPAddress_InvalidFormats_ReturnsFalse(string input)
         {
-            Assert.False(IPMaskingUtils.IsValidIPAddress(input));
+            Assert.False(IpMaskingUtils.IsValidIpAddress(input));
         }
 
         [Theory]
@@ -38,7 +38,7 @@ namespace UnitTests
         [InlineData(0, "0.0.0.0")]
         public void GetMask_ValidPrefix_ReturnsCorrectMask(int prefix, string expectedMask)
         {
-            var mask = IPMaskingUtils.GetMask(prefix);
+            var mask = IpMaskingUtils.GetMask(prefix);
             Assert.Equal(IPAddress.Parse(expectedMask), mask);
         }
 
@@ -47,7 +47,7 @@ namespace UnitTests
         [InlineData(33)]
         public void GetMask_InvalidPrefix_ThrowsException(int prefix)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => IPMaskingUtils.GetMask(prefix));
+            Assert.Throws<ArgumentOutOfRangeException>(() => IpMaskingUtils.GetMask(prefix));
         }
 
         [Theory]
@@ -55,7 +55,7 @@ namespace UnitTests
         [InlineData("10.0.0.1/8", "10.0.0.1")]
         public void SeparateIPAddress_ReturnsIPAddress(string input, string expected)
         {
-            var output = IPMaskingUtils.SeparateIPAddress(input);
+            var output = IpMaskingUtils.SeparateIpAddress(input);
             Assert.Equal(IPAddress.Parse(expected), output);
         }
 
@@ -64,7 +64,7 @@ namespace UnitTests
         [InlineData("10.0.0.1/8", 8)]
         public void SeparatePrefix_ReturnsPrefix(string input, int expectedPrefix)
         {
-            Assert.Equal(expectedPrefix, IPMaskingUtils.SeparatePrefix(input));
+            Assert.Equal(expectedPrefix, IpMaskingUtils.SeparatePrefix(input));
         }
 
         [Theory]
@@ -78,7 +78,7 @@ namespace UnitTests
             var ipAddress2 = IPAddress.Parse(ip2);
             var maskAddress = IPAddress.Parse(mask);
 
-            var result = IPMaskingUtils.IsInSameSubnet(ipAddress1, ipAddress2, maskAddress);
+            var result = IpMaskingUtils.IsInSameSubnet(ipAddress1, ipAddress2, maskAddress);
 
             Assert.Equal(expected, result);
         }

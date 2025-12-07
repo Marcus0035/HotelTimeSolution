@@ -2,7 +2,6 @@
 using System.Linq;
 using Maze.Core.Models.Abstract;
 using Maze.Core.Services;
-using Maze.Core.Utils;
 
 namespace Maze.Core.Models.Midgets
 {
@@ -15,7 +14,7 @@ namespace Maze.Core.Models.Midgets
         #endregion
 
         #region Properties
-        private DateTime _executeTime { get; set; }
+        private DateTime ExecuteTime { get; set; }
         #endregion
 
         #region Static
@@ -34,15 +33,15 @@ namespace Maze.Core.Models.Midgets
         #region Override
         protected override void PerformMove()
         {
-            if (_executeTime == default)
+            if (ExecuteTime == default)
             {
                 var time = DateTime.Now;
                 var delay = GenerateRandomDelay();
-                _executeTime = time.AddSeconds(delay);
+                ExecuteTime = time.AddSeconds(delay);
                 return;
             }
 
-            if (_executeTime > DateTime.Now) return;
+            if (ExecuteTime > DateTime.Now) return;
 
             Position = MovementService.MazeContext.EndPositions.First();
         }

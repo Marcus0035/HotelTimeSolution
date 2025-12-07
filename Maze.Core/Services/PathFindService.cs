@@ -20,9 +20,10 @@ namespace Maze.Core.Services
         #region Public
         public bool HasPathSolution(Point start, List<Point> endPositions)
         {
-            return FindPathBFS(start, endPositions).Count > 0;
+            return FindPathBfs(start, endPositions).Count > 0;
         }
-        public void ResetCachedPath()
+
+        private void ResetCachedPath()
         {
             _cachedPath = null;
         }
@@ -35,7 +36,7 @@ namespace Maze.Core.Services
         /// <param name="endPositions"></param>
         /// <param name="useCache"></param>
         /// <returns></returns>
-        public List<Point> FindPathBFS(Point start, List<Point> endPositions, bool useCache = true)
+        public List<Point> FindPathBfs(Point start, List<Point> endPositions, bool useCache = true)
         {
             if (_cachedPath != null && useCache)
                 return _cachedPath;

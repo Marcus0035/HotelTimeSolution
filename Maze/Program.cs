@@ -7,9 +7,6 @@ namespace Maze
 {
     internal class Program
     {
-        // Configuration
-        private const int Delay = 50;
-
         static void Main(string[] args)
         {
             // Application entry point with exception handling
@@ -76,7 +73,7 @@ namespace Maze
                     PrintColoredMessage(prompt, color);
                     var input = Console.ReadLine();
 
-                    if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                    if (input != null && input.Equals("exit", StringComparison.OrdinalIgnoreCase))
                         throw new OperationCanceledException();
 
                     if (!string.IsNullOrWhiteSpace(input) || acceptEnter)
@@ -86,7 +83,7 @@ namespace Maze
                 }
             }
 
-            // Utility methods
+            // Print methods
             void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
             {
                 Console.ForegroundColor = color;

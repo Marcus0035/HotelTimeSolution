@@ -4,22 +4,22 @@ namespace UnitTests.Maze.Services
 {
     public class PathFindServiceTests: MazeBaseTests
     {
-        private readonly string ValidFileName = "ValidSingleEnd.dat";
-        private readonly string NoPossibleFileName = "NoPossible.dat";
+        private readonly string _validFileName = "ValidSingleEnd.dat";
+        private readonly string _noPossibleFileName = "NoPossible.dat";
 
         [Fact]
         public void FindPathBFS_WorksCorrectly()
         {
-            var pathFindService = CreatePathFindService(ValidFileName);
-            var context = CreateContext(ValidFileName);
-            var path = pathFindService.FindPathBFS(context.Start, context.EndPositions, false);
+            var pathFindService = CreatePathFindService(_validFileName);
+            var context = CreateContext(_validFileName);
+            var path = pathFindService.FindPathBfs(context.Start, context.EndPositions, false);
             Assert.Contains(context.EndPositions[0], path);
         }
         [Fact]
         public void HasPathSolution_ReturnsTrue()
         {
-            var pathFindService = CreatePathFindService(ValidFileName);
-            var context = CreateContext(ValidFileName);
+            var pathFindService = CreatePathFindService(_validFileName);
+            var context = CreateContext(_validFileName);
             var hasPath = pathFindService.HasPathSolution(context.Start, context.EndPositions);
             Assert.True(hasPath);
         }
@@ -27,8 +27,8 @@ namespace UnitTests.Maze.Services
         [Fact]
         public void HasPathSolution_ReturnsFalse_WhenNoPath()
         {
-            var pathFindService = CreatePathFindService(NoPossibleFileName);
-            var context = CreateContext(NoPossibleFileName);
+            var pathFindService = CreatePathFindService(_noPossibleFileName);
+            var context = CreateContext(_noPossibleFileName);
             var hasPath = pathFindService.HasPathSolution(context.Start, context.EndPositions);
             Assert.False(hasPath);
         }

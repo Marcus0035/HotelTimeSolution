@@ -3,14 +3,17 @@ using System.Text.RegularExpressions;
 
 namespace IPMasking.Core
 {
-    public static class IPMaskingUtils
+    public static class IpMaskingUtils
     {
-        private const string _ipAddressMask = @"^((25[0-5]|2[0-4]\d|1?\d{1,2})\.){3}(25[0-5]|2[0-4]\d|1?\d{1,2})/(3[0-2]|[12]?\d)$";
-        private const int _byteCount = 4;
-        private static readonly Regex _ipRegex = new Regex(_ipAddressMask);
+        #region Const and Readonly
+        private const string IpAddressMask = @"^((25[0-5]|2[0-4]\d|1?\d{1,2})\.){3}(25[0-5]|2[0-4]\d|1?\d{1,2})/(3[0-2]|[12]?\d)$";
+        private const int ByteCount = 4;
+        private static readonly Regex IpRegex = new(IpAddressMask);
+        #endregion
 
-        public static bool IsValidIPAddress(string input) => _ipRegex.IsMatch(input);
-        public static IPAddress SeparateIPAddress(string input) => IPAddress.Parse(input.Split('/')[0]);
+        #region Public
+        public static bool IsValidIpAddress(string input) => IpRegex.IsMatch(input);
+        public static IPAddress SeparateIpAddress(string input) => IPAddress.Parse(input.Split('/')[0]);
         public static int SeparatePrefix(string input) => int.Parse(input.Split('/')[1]);
 
         public static bool IsInSameSubnet(IPAddress ip1, IPAddress ip2, IPAddress mask)
@@ -19,7 +22,7 @@ namespace IPMasking.Core
             var ip2Bytes = ip2.GetAddressBytes();
             var maskBytes = mask.GetAddressBytes();
 
-            for (var i = 0; i < _byteCount; i++)
+            for (var i = 0; i < ByteCount; i++)
             {
                 if ((ip1Bytes[i] & maskBytes[i]) != (ip2Bytes[i] & maskBytes[i]))
                     return false;
@@ -37,5 +40,6 @@ namespace IPMasking.Core
             var bytes = BitConverter.GetBytes(maskValue).Reverse().ToArray();
             return new IPAddress(bytes);
         }
+        #endregion
     }
 }

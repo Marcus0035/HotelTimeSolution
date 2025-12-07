@@ -1,5 +1,4 @@
-﻿using Fujtajbl;
-using Fujtajbl.Core;
+﻿using Fujtajbl.Core;
 
 namespace UnitTests
 {

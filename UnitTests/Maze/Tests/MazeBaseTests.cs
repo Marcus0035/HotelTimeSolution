@@ -6,8 +6,6 @@ namespace UnitTests.Maze.Tests
 {
     public class MazeBaseTests
     {
-        protected static MazeContext MazeContext;
-
         protected readonly Dictionary<MapTile, char> Tiles = new()
         {
             { MapTile.Start, 'S' },
@@ -31,6 +29,7 @@ namespace UnitTests.Maze.Tests
             var movementService = new MovementService(context);
             return new PathFindService(movementService);
         }
+
         protected MazeContext CreateContext(string fileName)
         {
             var path = GetMapPath(fileName);
@@ -41,8 +40,5 @@ namespace UnitTests.Maze.Tests
 
             return new MazeContext(map, Tiles, start, ends);
         }
-
-
-
     }
 }

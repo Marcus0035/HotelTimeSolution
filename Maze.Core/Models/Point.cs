@@ -2,7 +2,7 @@
 
 namespace Maze.Core.Models
 {
-    public struct Point : IEquatable<Point>
+    public readonly struct Point : IEquatable<Point>
     {
         public readonly int Column;
         public readonly int Row;

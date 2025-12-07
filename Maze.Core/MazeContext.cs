@@ -7,9 +7,9 @@ namespace Maze.Core
     public class MazeContext
     {
         public List<List<char>> Map { get; }
-        public Dictionary<MapTile, char> Tiles { get; set; }
-        public Point Start { get; set; }
-        public List<Point> EndPositions { get; set; }
+        public Dictionary<MapTile, char> Tiles { get; }
+        public Point Start { get; }
+        public List<Point> EndPositions { get; }
 
         public MazeContext(List<List<char>> map, Dictionary<MapTile, char> tiles, Point start, List<Point> endPositions)
         {

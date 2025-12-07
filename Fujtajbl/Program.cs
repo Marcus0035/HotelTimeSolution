@@ -27,7 +27,7 @@ namespace Fujtajbl
             void RunApplication()
             {
                 PrintColoredMessage("Welcome to 'From Fujtajbl to Very Nice Calculator'", ConsoleColor.Cyan);
-                PrintColoredMessage($"\nInfo:");
+                PrintColoredMessage("\nInfo:");
                 PrintColoredMessage($"For decimal numbers please use '{GetDecimalSeparator()}'", ConsoleColor.DarkCyan);
                 PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
@@ -36,7 +36,7 @@ namespace Fujtajbl
                     var firstNum = GetDouble("Please enter the first number:");
                     var secondNum = GetDouble("Please enter the second number:");
 
-                    var operationsDisplayString = string.Concat(FujtajblUtils.strategies.Keys);
+                    var operationsDisplayString = string.Concat(FujtajblUtils.Strategies.Keys);
                     var op = GetMathOperation($"Please enter the math operation ({operationsDisplayString}):");
 
                     try
@@ -67,7 +67,7 @@ namespace Fujtajbl
                 while (true)
                 {
                     var input = GetCharAnswer(prompt);
-                    if (FujtajblUtils.strategies.Keys.Contains(input))
+                    if (FujtajblUtils.Strategies.Keys.Contains(input))
                         return input;
 
                     PrintColoredMessage("Please enter a valid character.\n", ConsoleColor.Red);
@@ -106,7 +106,7 @@ namespace Fujtajbl
                     PrintColoredMessage(prompt, color);
                     var input = Console.ReadLine();
 
-                    if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                    if (input != null && input.Equals("exit", StringComparison.OrdinalIgnoreCase))
                         throw new OperationCanceledException();
 
                     if (!string.IsNullOrWhiteSpace(input) || acceptEnter)
@@ -116,7 +116,7 @@ namespace Fujtajbl
                 }
             }
 
-            // Utility methods
+            // Print methods
             void PrintColoredMessage(string message, ConsoleColor color = ConsoleColor.White)
             {
                 Console.ForegroundColor = color;

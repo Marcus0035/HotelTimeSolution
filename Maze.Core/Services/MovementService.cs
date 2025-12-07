@@ -20,7 +20,6 @@ namespace Maze.Core.Services
         #endregion
 
         #region Public
-
         public bool HasReachedFinish(Point position)
         {
             return MazeContext.EndPositions.Contains(position);

@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using IPMasking;
 using IPMasking.Core;
 
 try
@@ -21,10 +20,10 @@ void RunApplication()
     PrintColoredMessage("\nInfo:");
     PrintColoredMessage("For exit type 'exit' anytime\n", ConsoleColor.Yellow);
 
-    var input = GetCIDR($"Please input base IP Address (format X.X.X.X/Y): ");
-    var baseIp = IPMaskingUtils.SeparateIPAddress(input);
-    var prefix = IPMaskingUtils.SeparatePrefix(input);
-    var mask = IPMaskingUtils.GetMask(prefix);
+    var input = GetCidr("Please input base IP Address (format X.X.X.X/Y): ");
+    var baseIp = IpMaskingUtils.SeparateIpAddress(input);
+    var prefix = IpMaskingUtils.SeparatePrefix(input);
+    var mask = IpMaskingUtils.GetMask(prefix);
 
     PrintColoredMessage("\nConfiguration:", ConsoleColor.Cyan);
     PrintColoredMessage($"IP Address:\t{baseIp}", ConsoleColor.DarkCyan);
@@ -35,8 +34,8 @@ void RunApplication()
 
     while (true)
     {
-        var testIp = GetIPAddress("Please input IP Address to test: ");
-        var same = IPMaskingUtils.IsInSameSubnet(baseIp, testIp, mask);
+        var testIp = GetIpAddress("Please input IP Address to test: ");
+        var same = IpMaskingUtils.IsInSameSubnet(baseIp, testIp, mask);
 
         if (same)
             PrintColoredMessage("True: IP Addresses are in the same subnet.\n", ConsoleColor.Green);
@@ -45,20 +44,20 @@ void RunApplication()
     }
 }
 
-// Input
-string GetCIDR(string prompt)
+// Input methods
+string GetCidr(string prompt)
 {
     while (true)
     {
         var input = GetAnswer(prompt);
 
-        if (IPMaskingUtils.IsValidIPAddress(input))
+        if (IpMaskingUtils.IsValidIpAddress(input))
             return input;
 
         PrintColoredMessage("Invalid IP address format, try again.\n", ConsoleColor.Red);
     }
 }
-IPAddress GetIPAddress(string prompt)
+IPAddress GetIpAddress(string prompt)
 {
     while (true)
     {
@@ -77,7 +76,7 @@ string GetAnswer(string prompt)
         PrintColoredMessage(prompt, ConsoleColor.DarkYellow);
         var input = Console.ReadLine();
 
-        if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
+        if (input != null && input.Equals("exit", StringComparison.OrdinalIgnoreCase))
             throw new OperationCanceledException();
 
         if (!string.IsNullOrWhiteSpace(input))
