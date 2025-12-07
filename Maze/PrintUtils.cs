@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Maze.Core.Models.Abstract;
-using Maze.Core.Utils;
 
 namespace Maze
 {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Enumeration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.Core;
-using Maze.Core.Models;
+﻿using Maze.Core.Models;
 using Maze.Core.Utils;
 using UnitTests.Maze.BaseTest;
 

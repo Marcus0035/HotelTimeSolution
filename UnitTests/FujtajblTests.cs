@@ -1,5 +1,4 @@
 ﻿using Fujtajbl;
-using Xunit;
 
 namespace UnitTests
 {

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Maze.Core;
-using Maze.Core.Utils;
 
 namespace Maze
 {
