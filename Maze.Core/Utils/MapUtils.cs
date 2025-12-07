@@ -36,16 +36,16 @@ namespace Maze.Core.Utils
 
             var candidates = new List<Point>
             {
-                new Point(end.X, end.Y - 1),
-                new Point(end.X, end.Y + 1),
-                new Point(end.X - 1, end.Y),
-                new Point(end.X + 1, end.Y)
+                new Point(end.Column, end.Row - 1),
+                new Point(end.Column, end.Row + 1),
+                new Point(end.Column - 1, end.Row),
+                new Point(end.Column + 1, end.Row)
             };
 
             return candidates.Where(p =>
-                p.X >= 0 && p.X < map.Count &&
-                p.Y >= 0 && p.Y < map[p.X].Count &&
-                map[p.X][p.Y] == tiles[MapTile.Path]
+                p.Column >= 0 && p.Column < map.Count &&
+                p.Row >= 0 && p.Row < map[p.Column].Count &&
+                map[p.Column][p.Row] == tiles[MapTile.Path]
             ).ToList();
         }
         #endregion

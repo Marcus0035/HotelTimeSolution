@@ -30,13 +30,13 @@ namespace Maze.Core.Utils
             switch (direction)
             {
                 case Direction.Up:
-                    return new Point(point.X - 1, point.Y);
+                    return new Point(point.Column - 1, point.Row);
                 case Direction.Down:
-                    return new Point(point.X + 1, point.Y);
+                    return new Point(point.Column + 1, point.Row);
                 case Direction.Left:
-                    return new Point(point.X, point.Y - 1);
+                    return new Point(point.Column, point.Row - 1);
                 case Direction.Right:
-                    return new Point(point.X, point.Y + 1);
+                    return new Point(point.Column, point.Row + 1);
                 default:
                     return point;
             }
@@ -65,26 +65,26 @@ namespace Maze.Core.Utils
         #region Private
         private bool CanMoveToDirection(Point point, Direction direction)
         {
-            var row = point.X;
-            var col = point.Y;
+            var row = point.Column;
+            var col = point.Row;
             var pathSymbol = MazeContext.Tiles[MapTile.Path];
 
             switch (direction)
             {
                 case Direction.Up:
-                    if (!IsInsideMap(new Point(point.X - 1, point.Y))) return false;
+                    if (!IsInsideMap(new Point(point.Column - 1, point.Row))) return false;
                     return MazeContext.Map[row - 1][col] == pathSymbol;
 
                 case Direction.Down:
-                    if (!IsInsideMap(new Point(point.X + 1, point.Y))) return false;
+                    if (!IsInsideMap(new Point(point.Column + 1, point.Row))) return false;
                     return MazeContext.Map[row + 1][col] == pathSymbol;
 
                 case Direction.Left:
-                    if (!IsInsideMap(new Point(point.X, point.Y - 1))) return false;
+                    if (!IsInsideMap(new Point(point.Column, point.Row - 1))) return false;
                     return MazeContext.Map[row][col - 1] == pathSymbol;
 
                 case Direction.Right:
-                    if (!IsInsideMap(new Point(point.X, point.Y + 1))) return false;
+                    if (!IsInsideMap(new Point(point.Column, point.Row + 1))) return false;
                     return MazeContext.Map[row][col + 1] == pathSymbol;
 
                 default:
@@ -94,10 +94,10 @@ namespace Maze.Core.Utils
 
         private bool IsInsideMap(Point point)
         {
-            return point.X >= 0 &&
-                   point.X < MazeContext.Map.Count &&
-                   point.Y >= 0 &&
-                   point.Y < MazeContext.Map[point.X].Count;
+            return point.Column >= 0 &&
+                   point.Column < MazeContext.Map.Count &&
+                   point.Row >= 0 &&
+                   point.Row < MazeContext.Map[point.Column].Count;
         }
         #endregion
     }

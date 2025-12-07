@@ -4,19 +4,19 @@ namespace Maze.Core.Models
 {
     public struct Point : IEquatable<Point>
     {
-        public readonly int X;
-        public readonly int Y;
+        public readonly int Column;
+        public readonly int Row;
 
-        public Point(int x, int y)
+        public Point(int column, int row)
         {
-            X = x;
-            Y = y;
+            Column = column;
+            Row = row;
         }
 
         // IEquatable ReSharper implementation
         public bool Equals(Point other)
         {
-            return X == other.X && Y == other.Y;
+            return Column == other.Column && Row == other.Row;
         }
         public override bool Equals(object obj)
         {
@@ -26,7 +26,7 @@ namespace Maze.Core.Models
         {
             unchecked
             {
-                return (X * 397) ^ Y;
+                return (Column * 397) ^ Row;
             }
         }
     }

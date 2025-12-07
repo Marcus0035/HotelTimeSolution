@@ -18,7 +18,7 @@ namespace Maze
                 {
                     var tile = map[x][y];
 
-                    var midget = midgets.FirstOrDefault(m => m.Position.X == x && m.Position.Y == y);
+                    var midget = midgets.FirstOrDefault(m => m.Position.Column == x && m.Position.Row == y);
 
                     if (midget != null)
                     {
